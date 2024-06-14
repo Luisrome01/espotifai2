@@ -1,0 +1,5 @@
+<div class="volume-container">
+  <label for="volumeSlider">Volume Control</label>
+  <input id="volumeSlider" type="range" min="0" max="100" [(ngModel)]="volume" (input)="onVolumeChange($event)">
+  <span>{{ volume }}%</span>
+</div>
