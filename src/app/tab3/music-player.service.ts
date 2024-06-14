@@ -1,59 +1,79 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MusicPlayerService {
-  private audio = new Audio(); // Objeto de audio HTML5
-  private songSubject = new BehaviorSubject<any>(null);
-  song = this.songSubject.asObservable();
-  isPlaying = false;
+  private audio: HTMLAudioElement;
+  private selectedSong: any;
+  private isPlayingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private currentTimeSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  private durationSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   constructor() {
-    // Evento para detectar cuando la canción finaliza
+    this.audio = new Audio();
+    this.audio.addEventListener('timeupdate', () => {
+      this.currentTimeSubject.next(this.audio.currentTime);
+    });
+
+    this.audio.addEventListener('durationchange', () => {
+      this.durationSubject.next(this.audio.duration);
+    });
+
     this.audio.addEventListener('ended', () => {
-      this.isPlaying = false;
+      this.isPlayingSubject.next(false);
     });
   }
 
-  setSong(song: any) {
-    this.songSubject.next(song);
-    this.loadSong(song);
+  init(song: any) {
+    this.selectedSong = song;
+    this.audio.src = this.selectedSong.preview_url;
+    this.audio.load();
   }
 
   play() {
-    if (this.audio.paused) {
+    if (this.selectedSong && this.selectedSong.preview_url) {
       this.audio.play();
-      this.isPlaying = true;
+      this.isPlayingSubject.next(true);
     }
   }
 
   pause() {
-    if (!this.audio.paused) {
+    if (this.selectedSong && this.selectedSong.preview_url) {
       this.audio.pause();
-      this.isPlaying = false;
+      this.isPlayingSubject.next(false);
     }
   }
 
-  seekTo(seconds: number) {
-    this.audio.currentTime = seconds;
+  seekTo(time: number) {
+    this.audio.currentTime = time;
   }
 
-  getCurrentTime(): number {
-    return this.audio.currentTime;
-  }
-
-  getDuration(): number {
-    return this.audio.duration;
-  }
-
-  private loadSong(song: any) {
-    if (song.preview_url) {
-      this.audio.src = song.preview_url;
-      this.audio.load();
-    } else {
-      console.error('No preview available for this song.');
+  setVolume(volume: number) {
+    if (volume >= 0 && volume <= 100) {
+      this.audio.volume = volume / 100;
     }
+  }
+
+  setSong(song: any) {
+    this.selectedSong = song;
+    this.init(this.selectedSong);
+  }
+
+  getSelectedSong(): any {
+    return this.selectedSong;
+  }
+
+  getCurrentTime(): Observable<number> {
+    return this.currentTimeSubject.asObservable();
+  }
+
+  getDuration(): Observable<number> {
+    return this.durationSubject.asObservable();
+  }
+
+  getIsPlaying(): Observable<boolean> {
+    return this.isPlayingSubject.asObservable();
   }
 }

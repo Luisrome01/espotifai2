@@ -1,34 +1,45 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title>
-        Biblioteca
-      </ion-title>
+    <ion-toolbar color="primary">
+      <ion-title>Biblioteca</ion-title>
     </ion-toolbar>
   </ion-header>
   
-  <ion-content class="ion-padding">
+  <ion-content fullscreen class="ion-padding">
     <ion-card *ngIf="selectedSong" class="song-card">
       <ion-card-header>
-        <ion-card-title>{{ selectedSong.name }}</ion-card-title>
         <ion-card-subtitle>{{ selectedSong.artists[0].name }}</ion-card-subtitle>
+        <ion-card-title>{{ selectedSong.name }}</ion-card-title>
       </ion-card-header>
-      <ion-card-content>
-        <ion-thumbnail>
+  
+      <ion-card-content class="song-details">
+        <ion-thumbnail class="song-cover">
           <img [src]="selectedSong.album.images[0]?.url" alt="Song Cover">
         </ion-thumbnail>
+  
         <ion-item class="song-duration">
-          <ion-label>Duration: {{ formatTime(duration) }}</ion-label>
+          <ion-label>{{ formatTime(currentTime) }}</ion-label>
+          <ion-range min="0" max="{{ duration }}" step="1" [(ngModel)]="currentTime" (ionChange)="seekTo($event)">
+            <ion-label slot="start">0:00</ion-label>
+            <ion-label slot="end">{{ formatTime(duration) }}</ion-label>
+          </ion-range>
         </ion-item>
-        <ion-range min="0" max="{{ duration }}" step="1" [(ngModel)]="currentTime" (ionChange)="seekTo($event)">
-          <ion-label slot="start">0:00</ion-label>
-          <ion-label slot="end">{{ formatTime(duration) }}</ion-label>
-        </ion-range>
-        <ion-item class="player-controls">
-          <ion-icon slot="start" name="play-circle-outline" *ngIf="!isPlaying" (click)="playSelectedSong()"></ion-icon>
-          <ion-icon slot="start" name="pause-circle-outline" *ngIf="isPlaying" (click)="pauseSelectedSong()"></ion-icon>
+  
+        <ion-item class="song-volume">
+          <ion-label>Volume</ion-label>
+          <ion-range min="0" max="100" step="1" [(ngModel)]="currentVolume" (ionChange)="changeVolume($event)">
+            <ion-icon size="small" slot="start" name="volume-off-outline" *ngIf="currentVolume === 0"></ion-icon>
+            <ion-icon size="small" slot="start" name="volume-low-outline" *ngIf="currentVolume > 0 && currentVolume < 70"></ion-icon>
+            <ion-icon size="small" slot="start" name="volume-high-outline" *ngIf="currentVolume >= 70"></ion-icon>
+            <ion-label slot="end">{{ currentVolume }}</ion-label>
+          </ion-range>
+        </ion-item>
+  
+        <div class="player-controls">
+          <ion-icon name="play-circle-outline" *ngIf="!isPlaying" (click)="playSelectedSong()"></ion-icon>
+          <ion-icon name="pause-circle-outline" *ngIf="isPlaying" (click)="pauseSelectedSong()"></ion-icon>
           <ion-label *ngIf="isPlaying" (click)="pauseSelectedSong()">Pause</ion-label>
           <ion-label *ngIf="!isPlaying" (click)="playSelectedSong()">Play</ion-label>
-        </ion-item>
+        </div>
       </ion-card-content>
     </ion-card>
   </ion-content>

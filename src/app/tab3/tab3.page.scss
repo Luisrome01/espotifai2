@@ -1,53 +1,76 @@
 .song-card {
-  width: 90%;
-  max-width: 400px;
+  width: 100%;
+  max-width: 450px;
   margin: auto;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #1db954; /* Color verde de Spotify */
 }
 
 .song-card ion-thumbnail {
-  width: 100px;
-  height: 100px;
-  margin: auto;
+  width: 200px; /* Tamaño grande para el cover de la canción */
+  height: 200px;
+  margin: 20px auto;
   border-radius: 50%;
   overflow: hidden;
 }
 
 .song-card ion-thumbnail img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen para que cubra completamente el área del thumbnail */
 }
 
-.song-duration {
+.song-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.song-duration,
+.song-volume {
   text-align: center;
+  margin-bottom: 20px;
+  width: 90%; /* Ancho del ion-item */
+  max-width: 400px; /* Máximo ancho del ion-item */
+  margin: auto; /* Centrar */
+}
+
+.song-duration ion-range,
+.song-volume ion-range {
+  width: 100%; /* Ancho completo del ion-range */
 }
 
 .player-controls {
-  text-align: center;
-  --ion-item-background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
-.player-controls ion-icon {
+.player-controls ion-icon,
+.player-controls ion-label {
   font-size: 48px;
   cursor: pointer;
-  color: #3880ff;
+  color: white; /* Color blanco para iconos */
+  margin: 0 10px;
 }
 
 .player-controls ion-label {
   font-size: 20px;
-  cursor: pointer;
-  color: #3880ff;
-  padding-left: 10px;
 }
 
 ion-range {
-  --bar-background: #b0b0b0;
-  --bar-background-active: #3880ff;
+  --bar-height: 8px; /* Altura de la barra */
+  --bar-background: #b0b0b0; /* Color de fondo de la barra */
+  --bar-background-active: #1db954; /* Color de la barra activa */
+  --knob-size: 20px; /* Tamaño del botón */
+  --knob-background: #1db954; /* Color del botón */
+  --knob-border-radius: 50%; /* Borde redondeado del botón */
 }
 
 ion-label[slot="start"],
 ion-label[slot="end"] {
   font-size: 14px;
-  color: #3880ff;
+  color: white; /* Color blanco para etiquetas de tiempo */
 }

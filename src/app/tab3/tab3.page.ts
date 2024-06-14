@@ -1,71 +1,72 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MusicPlayerService } from './music-player.service'; // Importar el servicio compartido
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
+import { MusicPlayerService } from './music-player.service';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss'],
 })
-export class Tab3Page implements OnInit, OnDestroy {
-  selectedSong: any;
-  isPlaying = false;
-  duration = 0;
+export class Tab3Page {
+  selectedSong: any; // Aquí irá la canción seleccionada
   currentTime = 0;
-  private songSubscription: Subscription | undefined; // Añadir inicializador
+  duration = 0;
+  currentVolume = 50; // Volumen inicial
+  isPlaying = false;
 
-  constructor(private musicPlayerService: MusicPlayerService) {}
+  constructor(private musicPlayer: MusicPlayerService) {}
 
   ngOnInit() {
-    this.songSubscription = this.musicPlayerService.song.subscribe((song) => {
-      this.selectedSong = song;
-    });
-  }
+    // Ejemplo de cómo se podría obtener la canción seleccionada
+    this.selectedSong = this.musicPlayer.getSelectedSong();
 
-  ngOnDestroy() {
-    if (this.songSubscription) {
-      this.songSubscription.unsubscribe();
-    }
+    // Inicializar el reproductor con la canción seleccionada
+    this.musicPlayer.init(this.selectedSong);
+
+    // Suscripción para obtener el tiempo actual de reproducción
+    this.musicPlayer.getCurrentTime().subscribe((time: number) => {
+      this.currentTime = time;
+    });
+
+    // Suscripción para obtener la duración total de la canción
+    this.musicPlayer.getDuration().subscribe((duration: number) => {
+      this.duration = duration;
+    });
+
+    // Suscripción para obtener el estado de reproducción (play/pause)
+    this.musicPlayer.getIsPlaying().subscribe((playing: boolean) => {
+      this.isPlaying = playing;
+    });
+
+    // Establecer el volumen inicial
+    this.musicPlayer.setVolume(this.currentVolume);
   }
 
   playSelectedSong() {
-    if (this.selectedSong) {
-      this.musicPlayerService.play();
-      this.isPlaying = true;
-      this.updateCurrentTime();
-      this.updateDuration();
-    }
+    this.musicPlayer.play();
   }
 
   pauseSelectedSong() {
-    this.musicPlayerService.pause();
-    this.isPlaying = false;
+    this.musicPlayer.pause();
   }
 
   seekTo(event: any) {
-    const seekTime = event.detail.value;
-    this.musicPlayerService.seekTo(seekTime);
+    const time = event.detail.value;
+    this.musicPlayer.seekTo(time);
   }
 
-  private updateCurrentTime() {
-    setInterval(() => {
-      this.currentTime = this.musicPlayerService.getCurrentTime();
-    }, 1000);
+  changeVolume(event: any) {
+    const volume = event.detail.value;
+    this.musicPlayer.setVolume(volume);
   }
 
-  private updateDuration() {
-    setTimeout(() => {
-      this.duration = this.musicPlayerService.getDuration();
-    }, 1000);
-  }
+  formatTime(seconds: number): string {
+    if (isNaN(seconds)) {
+      return '0:00';
+    }
 
-  formatTime(time: number): string {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${this.pad(minutes)}:${this.pad(seconds)}`;
-  }
-
-  private pad(val: number): string {
-    return val < 10 ? `0${val}` : val.toString();
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    const displaySeconds = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
+    return `${minutes}:${displaySeconds}`;
   }
 }
