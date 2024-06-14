@@ -4,21 +4,22 @@
   margin: auto;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #1db954; /* Color verde de Spotify */
+  background-color: #1db954;
+  color: white;
 }
 
 .song-card ion-thumbnail {
-  width: 200px; /* Tamaño grande para el cover de la canción */
+  width: 200px;
   height: 200px;
   margin: 20px auto;
-  border-radius: 50%;
+  border-radius: 10px;
   overflow: hidden;
 }
 
 .song-card ion-thumbnail img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ajusta la imagen para que cubra completamente el área del thumbnail */
+  object-fit: cover;
 }
 
 .song-details {
@@ -31,14 +32,14 @@
 .song-volume {
   text-align: center;
   margin-bottom: 20px;
-  width: 90%; /* Ancho del ion-item */
-  max-width: 400px; /* Máximo ancho del ion-item */
-  margin: auto; /* Centrar */
+  width: 90%;
+  max-width: 400px;
+  margin: auto;
 }
 
 .song-duration ion-range,
 .song-volume ion-range {
-  width: 100%; /* Ancho completo del ion-range */
+  width: 100%;
 }
 
 .player-controls {
@@ -48,29 +49,24 @@
   margin-top: 20px;
 }
 
-.player-controls ion-icon,
-.player-controls ion-label {
+.player-controls ion-icon {
   font-size: 48px;
   cursor: pointer;
-  color: white; /* Color blanco para iconos */
+  color: white;
   margin: 0 10px;
 }
 
-.player-controls ion-label {
-  font-size: 20px;
-}
-
 ion-range {
-  --bar-height: 8px; /* Altura de la barra */
-  --bar-background: #b0b0b0; /* Color de fondo de la barra */
-  --bar-background-active: #1db954; /* Color de la barra activa */
-  --knob-size: 20px; /* Tamaño del botón */
-  --knob-background: #1db954; /* Color del botón */
-  --knob-border-radius: 50%; /* Borde redondeado del botón */
+  --bar-height: 8px;
+  --bar-background: #b0b0b0;
+  --bar-background-active: #1db954;
+  --knob-size: 20px;
+  --knob-background: #1db954;
+  --knob-border-radius: 50%;
 }
 
 ion-label[slot="start"],
 ion-label[slot="end"] {
   font-size: 14px;
-  color: white; /* Color blanco para etiquetas de tiempo */
+  color: white;
 }

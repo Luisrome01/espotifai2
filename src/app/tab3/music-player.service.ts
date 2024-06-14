@@ -6,44 +6,40 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class MusicPlayerService {
   private audio: HTMLAudioElement;
-  private selectedSong: any;
-  private isPlayingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private currentTimeSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  private durationSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  private currentTimeSubject: BehaviorSubject<number> = new BehaviorSubject(0);
+  private durationSubject: BehaviorSubject<number> = new BehaviorSubject(0);
+  private isPlayingSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private selectedSongSubject: BehaviorSubject<any> = new BehaviorSubject(null);
+  private volumeSubject: BehaviorSubject<number> = new BehaviorSubject(50);
 
   constructor() {
     this.audio = new Audio();
-    this.audio.addEventListener('timeupdate', () => {
+    this.audio.ontimeupdate = () => {
       this.currentTimeSubject.next(this.audio.currentTime);
-    });
-
-    this.audio.addEventListener('durationchange', () => {
+    };
+    this.audio.onloadedmetadata = () => {
       this.durationSubject.next(this.audio.duration);
-    });
-
-    this.audio.addEventListener('ended', () => {
+    };
+    this.audio.onplay = () => {
+      this.isPlayingSubject.next(true);
+    };
+    this.audio.onpause = () => {
       this.isPlayingSubject.next(false);
-    });
+    };
   }
 
-  init(song: any) {
-    this.selectedSong = song;
-    this.audio.src = this.selectedSong.preview_url;
+  setSong(song: any) {
+    this.selectedSongSubject.next(song);
+    this.audio.src = song.preview_url;
     this.audio.load();
   }
 
   play() {
-    if (this.selectedSong && this.selectedSong.preview_url) {
-      this.audio.play();
-      this.isPlayingSubject.next(true);
-    }
+    this.audio.play();
   }
 
   pause() {
-    if (this.selectedSong && this.selectedSong.preview_url) {
-      this.audio.pause();
-      this.isPlayingSubject.next(false);
-    }
+    this.audio.pause();
   }
 
   seekTo(time: number) {
@@ -51,18 +47,8 @@ export class MusicPlayerService {
   }
 
   setVolume(volume: number) {
-    if (volume >= 0 && volume <= 100) {
-      this.audio.volume = volume / 100;
-    }
-  }
-
-  setSong(song: any) {
-    this.selectedSong = song;
-    this.init(this.selectedSong);
-  }
-
-  getSelectedSong(): any {
-    return this.selectedSong;
+    this.audio.volume = volume / 100;
+    this.volumeSubject.next(volume);
   }
 
   getCurrentTime(): Observable<number> {
@@ -75,5 +61,13 @@ export class MusicPlayerService {
 
   getIsPlaying(): Observable<boolean> {
     return this.isPlayingSubject.asObservable();
+  }
+
+  getSelectedSong(): Observable<any> {
+    return this.selectedSongSubject.asObservable();
+  }
+
+  getVolume(): Observable<number> {
+    return this.volumeSubject.asObservable();
   }
 }

@@ -1,44 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MusicPlayerService } from './music-player.service';
 
 @Component({
   selector: 'app-tab3',
-  templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss'],
+  templateUrl: './tab3.page.html',
+  styleUrls: ['./tab3.page.scss'],
 })
-export class Tab3Page {
-  selectedSong: any; // Aquí irá la canción seleccionada
-  currentTime = 0;
-  duration = 0;
-  currentVolume = 50; // Volumen inicial
-  isPlaying = false;
+export class Tab3Page implements OnInit {
+  selectedSong: any;
+  currentTime: number = 0;
+  duration: number = 0;
+  isPlaying: boolean = false;
+  currentVolume: number = 50;
 
   constructor(private musicPlayer: MusicPlayerService) {}
 
   ngOnInit() {
-    // Ejemplo de cómo se podría obtener la canción seleccionada
-    this.selectedSong = this.musicPlayer.getSelectedSong();
+    this.musicPlayer.getSelectedSong().subscribe((song: any) => {
+      this.selectedSong = song;
+      this.playSelectedSong();
+    });
 
-    // Inicializar el reproductor con la canción seleccionada
-    this.musicPlayer.init(this.selectedSong);
-
-    // Suscripción para obtener el tiempo actual de reproducción
     this.musicPlayer.getCurrentTime().subscribe((time: number) => {
       this.currentTime = time;
     });
 
-    // Suscripción para obtener la duración total de la canción
     this.musicPlayer.getDuration().subscribe((duration: number) => {
       this.duration = duration;
     });
 
-    // Suscripción para obtener el estado de reproducción (play/pause)
     this.musicPlayer.getIsPlaying().subscribe((playing: boolean) => {
       this.isPlaying = playing;
     });
 
-    // Establecer el volumen inicial
-    this.musicPlayer.setVolume(this.currentVolume);
+    this.musicPlayer.getVolume().subscribe((volume: number) => {
+      this.currentVolume = volume;
+    });
   }
 
   playSelectedSong() {
