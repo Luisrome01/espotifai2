@@ -1,0 +1,53 @@
+.song-card {
+  width: 90%;
+  max-width: 400px;
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.song-card ion-thumbnail {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.song-card ion-thumbnail img {
+  width: 100%;
+  height: auto;
+}
+
+.song-duration {
+  text-align: center;
+}
+
+.player-controls {
+  text-align: center;
+  --ion-item-background: transparent;
+}
+
+.player-controls ion-icon {
+  font-size: 48px;
+  cursor: pointer;
+  color: #3880ff;
+}
+
+.player-controls ion-label {
+  font-size: 20px;
+  cursor: pointer;
+  color: #3880ff;
+  padding-left: 10px;
+}
+
+ion-range {
+  --bar-background: #b0b0b0;
+  --bar-background-active: #3880ff;
+}
+
+ion-label[slot="start"],
+ion-label[slot="end"] {
+  font-size: 14px;
+  color: #3880ff;
+}

@@ -1,2 +1,11 @@
-/* styles.scss */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+ion-thumbnail {
+    width: 64px;
+    height: 64px;
+  }
+  
+  ion-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  

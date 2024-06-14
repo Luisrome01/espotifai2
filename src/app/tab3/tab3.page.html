@@ -1,17 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Biblioteca
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-header>
     <ion-toolbar>
-      <ion-title size="large">Biblioteca</ion-title>
+      <ion-title>
+        Biblioteca
+      </ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <app-explore-container name="Biblioteca"></app-explore-container>
-</ion-content>
+  
+  <ion-content class="ion-padding">
+    <ion-card *ngIf="selectedSong" class="song-card">
+      <ion-card-header>
+        <ion-card-title>{{ selectedSong.name }}</ion-card-title>
+        <ion-card-subtitle>{{ selectedSong.artists[0].name }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-thumbnail>
+          <img [src]="selectedSong.album.images[0]?.url" alt="Song Cover">
+        </ion-thumbnail>
+        <ion-item class="song-duration">
+          <ion-label>Duration: {{ formatTime(duration) }}</ion-label>
+        </ion-item>
+        <ion-range min="0" max="{{ duration }}" step="1" [(ngModel)]="currentTime" (ionChange)="seekTo($event)">
+          <ion-label slot="start">0:00</ion-label>
+          <ion-label slot="end">{{ formatTime(duration) }}</ion-label>
+        </ion-range>
+        <ion-item class="player-controls">
+          <ion-icon slot="start" name="play-circle-outline" *ngIf="!isPlaying" (click)="playSelectedSong()"></ion-icon>
+          <ion-icon slot="start" name="pause-circle-outline" *ngIf="isPlaying" (click)="pauseSelectedSong()"></ion-icon>
+          <ion-label *ngIf="isPlaying" (click)="pauseSelectedSong()">Pause</ion-label>
+          <ion-label *ngIf="!isPlaying" (click)="playSelectedSong()">Play</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+  

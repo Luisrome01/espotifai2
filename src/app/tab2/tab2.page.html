@@ -1,21 +1,41 @@
-<!-- src/app/tab1/tab1.page.html -->
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Espotifai - Pestaña 1
+      Buscar Canciones
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Control de Volumen</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-     
-        <input matSliderThumb>
-    
-    </ion-card-content>
-  </ion-card>
+  <ion-searchbar placeholder="Buscar canciones" [(ngModel)]="searchTerm" (ionInput)="searchItems($event)"></ion-searchbar>
+
+  <!-- Selector de género musical -->
+  <ion-item>
+    <ion-label>Género Musical</ion-label>
+    <ion-select [(ngModel)]="selectedGenre" (ionChange)="searchItems($event)">
+      <ion-select-option value="rock">Rock</ion-select-option>
+      <ion-select-option value="pop">Pop</ion-select-option>
+      <ion-select-option value="jazz">Jazz</ion-select-option>
+      <ion-select-option value="hip-hop">Hip Hop</ion-select-option>
+      <ion-select-option value="electronic">Electronic</ion-select-option>
+      <ion-select-option value="Trap">Trap</ion-select-option>
+      <ion-select-option value="Podcast">Podcast</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-list *ngIf="searchResults.length > 0">
+    <ion-item *ngFor="let song of searchResults" (click)="playSong(song)">
+      <ion-thumbnail slot="start">
+        <img [src]="song.album.images[0]?.url">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ song.name }}</h2>
+        <p>{{ song.artists[0].name }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="searchResults.length === 0 && searchTerm !== ''">
+    No se encontraron canciones para "{{ searchTerm }}"
+  </div>
 </ion-content>
