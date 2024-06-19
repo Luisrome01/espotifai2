@@ -1,0 +1,77 @@
+.header-title {
+    --background: white; /* Color de fondo blanco para la barra de herramientas */
+  }
+  
+  .header-title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrado horizontal */
+    width: 100%; /* Ocupa todo el ancho disponible */
+  }
+  
+  .header-title-wrapper span {
+    flex: 1; /* Hace que el texto "espotifai" ocupe todo el espacio restante */
+    text-align: center; /* Centra el texto dentro de su espacio */
+  }
+  
+  .header-title-wrapper img {
+    margin-left: 10px; /* Espacio a la izquierda del logo para separarlo del texto */
+  }
+  
+  
+  
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px; /* Espacio superior para centrar el formulario */
+  }
+  
+  ion-item {
+    --background: #1db954; /* Color de fondo oscuro para los ítems */
+    color: white; /* Color de texto blanco */
+  }
+  
+  ion-label {
+    color: #1db954; /* Color verde de Spotify para las etiquetas */
+  }
+  
+  ion-input {
+    color: white; /* Color de texto blanco */
+  }
+  
+  ion-button {
+    --background: #1db954; /* Color de fondo verde de Spotify para los botones */
+    --color: white; /* Color de texto blanco para los botones */
+    margin-top: 20px; /* Espacio superior */
+  }
+  
+  .validation-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff0000; /* Color rojo para los mensajes de validación */
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .register-link {
+    --background: none; /* Sin fondo */
+    color: rgb(0, 0, 0); /* Color de texto blanco */
+  }
+  
+  .register-link ion-label {
+    --padding-start: 0;
+  }
+  
+  .register-link ion-router-link {
+    color: #1db954; /* Color verde de Spotify para el enlace de registro */
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .register-link ion-router-link:hover {
+    text-decoration: underline;
+  }
+  

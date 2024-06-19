@@ -30,6 +30,7 @@ export class Tab2Page {
             this.searchSongs(searchTerm, this.selectedGenre, token.access_token).subscribe(
               (data: any) => {
                 this.searchResults = data.tracks.items;
+                console.log(this.searchResults )
               },
               (error) => {
                 console.error('Error fetching search results', error);
