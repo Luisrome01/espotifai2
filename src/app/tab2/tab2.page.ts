@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MusicPlayerService } from '../tab3/music-player.service'; // Importar el servicio compartido
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -11,6 +12,7 @@ export class Tab2Page {
   searchTerm: string = '';
   searchResults: any[] = [];
   selectedGenre: string = 'rock'; // Valor por defecto
+  selectedSong: any = null;
 
   // Datos de autenticación de Spotify
   clientId = '07ef288afade491db9f20b58d12e6e25';
@@ -18,7 +20,8 @@ export class Tab2Page {
 
   constructor(
     private http: HttpClient,
-    private musicPlayerService: MusicPlayerService
+    private musicPlayerService: MusicPlayerService,
+    private alertController: AlertController
   ) {}
 
   searchItems(event: any) {
@@ -30,7 +33,6 @@ export class Tab2Page {
             this.searchSongs(searchTerm, this.selectedGenre, token.access_token).subscribe(
               (data: any) => {
                 this.searchResults = data.tracks.items;
-                console.log(this.searchResults )
               },
               (error) => {
                 console.error('Error fetching search results', error);
@@ -73,8 +75,26 @@ export class Tab2Page {
     return this.http.get(url, httpOptions);
   }
 
-  playSong(song: any) {
+  async playSong(song: any) {
     console.log('Playing song:', song);
-    this.musicPlayerService.setSong(song);
+    this.selectedSong = song;
+
+    try {
+      await this.musicPlayerService.setSong(song);
+      await this.musicPlayerService.play();
+    } catch (error) {
+      console.error('Error playing song', error);
+      await this.presentAlert('Error al reproducir la canción', 'Por favor, inténtalo de nuevo más tarde.');
+    }
+  }
+
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }

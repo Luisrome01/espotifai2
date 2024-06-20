@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MusicPlayerService } from './music-player.service';
+import { MusicPlayerService } from './music-player.service'; // Asegúrate de tener la ruta correcta
 
 @Component({
   selector: 'app-tab3',
@@ -7,7 +7,7 @@ import { MusicPlayerService } from './music-player.service';
   styleUrls: ['./tab3.page.scss'],
 })
 export class Tab3Page implements OnInit {
-  selectedSong: any;
+  selectedSong: any = null;
   currentTime: number = 0;
   duration: number = 0;
   isPlaying: boolean = false;
@@ -18,7 +18,9 @@ export class Tab3Page implements OnInit {
   ngOnInit() {
     this.musicPlayer.getSelectedSong().subscribe((song: any) => {
       this.selectedSong = song;
-      this.playSelectedSong();
+      if (song) {
+        this.playSelectedSong();
+      }
     });
 
     this.musicPlayer.getCurrentTime().subscribe((time: number) => {
@@ -39,11 +41,22 @@ export class Tab3Page implements OnInit {
   }
 
   playSelectedSong() {
-    this.musicPlayer.play();
+    if (this.selectedSong) {
+      this.musicPlayer.play();
+    }
   }
 
   pauseSelectedSong() {
     this.musicPlayer.pause();
+  }
+
+  restartSong() {
+    this.musicPlayer.seekTo(0);
+  }
+
+  nextSong() {
+    // Aquí puedes implementar la lógica para reproducir la siguiente canción
+    console.log('Siguiente canción');
   }
 
   seekTo(event: any) {

@@ -1,11 +1,22 @@
-ion-thumbnail {
-    width: 64px;
-    height: 64px;
-  }
-  
-  ion-label {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
+.selected-song-card {
+  width: 100%;
+  max-width: 450px;
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  display: none; /* Ocultamos la tarjeta por defecto */
+}
+
+.selected-song-card.show {
+  display: block; /* Mostramos la tarjeta cuando hay una canción seleccionada */
+}
+
+.selected-song-card ion-card-content {
+  display: flex;
+  justify-content: center;
+}
+
+.selected {
+  background-color: #f2f2f2; /* Estilo para resaltar la canción seleccionada */
+}

@@ -32,6 +32,8 @@
         <h2>{{ song.name }}</h2>
         <p>{{ song.artists[0].name }}</p>
       </ion-label>
+      <!-- Mostrar la canción seleccionada -->
+      <ion-icon name="checkmark" slot="end" *ngIf="selectedSong?.id === song.id"></ion-icon>
     </ion-item>
   </ion-list>
 

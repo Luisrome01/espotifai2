@@ -1,11 +1,13 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Biblioteca</ion-title>
+  <ion-toolbar>
+    <ion-title>
+      Biblioteca
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen class="ion-padding">
-  <ion-card *ngIf="selectedSong" class="song-card">
+  <ion-card *ngIf="selectedSong; else noSongSelected" class="song-card">
     <ion-card-header>
       <ion-card-subtitle>{{ selectedSong.artists[0].name }}</ion-card-subtitle>
       <ion-card-title>{{ selectedSong.name }}</ion-card-title>
@@ -24,8 +26,14 @@
         </ion-range>
       </ion-item>
 
+      <div class="player-controls">
+        <ion-icon name="play-back-circle-outline" (click)="restartSong()"></ion-icon>
+        <ion-icon name="play-circle-outline" *ngIf="!isPlaying" (click)="playSelectedSong()"></ion-icon>
+        <ion-icon name="pause-circle-outline" *ngIf="isPlaying" (click)="pauseSelectedSong()"></ion-icon>
+        <ion-icon name="play-forward-circle-outline" (click)="nextSong()"></ion-icon>
+      </div>
+
       <ion-item class="song-volume">
-        <ion-label>Volume</ion-label>
         <ion-range min="0" max="100" step="1" [(ngModel)]="currentVolume" (ionChange)="changeVolume($event)">
           <ion-icon size="small" slot="start" name="volume-off-outline" *ngIf="currentVolume === 0"></ion-icon>
           <ion-icon size="small" slot="start" name="volume-low-outline" *ngIf="currentVolume > 0 && currentVolume < 70"></ion-icon>
@@ -33,11 +41,13 @@
           <ion-label slot="end">{{ currentVolume }}</ion-label>
         </ion-range>
       </ion-item>
-
-      <div class="player-controls">
-        <ion-icon name="play-circle-outline" *ngIf="!isPlaying" (click)="playSelectedSong()"></ion-icon>
-        <ion-icon name="pause-circle-outline" *ngIf="isPlaying" (click)="pauseSelectedSong()"></ion-icon>
-      </div>
     </ion-card-content>
   </ion-card>
+
+  <ng-template #noSongSelected>
+    <div class="no-song">
+      <h2>No hay ninguna canción seleccionada</h2>
+      <p>Por favor, selecciona una canción en el buscador de canciones.</p>
+    </div>
+  </ng-template>
 </ion-content>
