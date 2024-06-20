@@ -1,16 +1,65 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>register</ion-title>
+    <ion-title class="header-title">
+      espotifai
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">register</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-button expand="full" routerLink="/tabs">pasar a tabs</ion-button>
 
-  <ion-button expand="full" routerLink="/login">ya tengo cuenta</ion-button>
+
+  <ion-content class="ion-padding">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="chevron-down-circle-outline"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing..."
+      >
+      </ion-refresher-content>
+    </ion-refresher>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form">
+    <p class="title">Register</p>
+    <p class="message">Signup now and get full access to our app.</p>
+    <div class="flex">
+      <label>
+        <input formControlName="firstname" class="input" type="text" placeholder="" required>
+        <span *ngIf="registerForm.get('firstname')?.hasError('required') && registerForm.get('firstname')?.touched">Firstname is required</span>
+        <span *ngIf="registerForm.get('firstname')?.hasError('pattern') && registerForm.get('firstname')?.touched">Enter a valid firstname</span>
+        <span>Firstname</span>
+      </label>
+
+      <label>
+        <input formControlName="lastname" class="input" type="text" placeholder="" required>
+        <span *ngIf="registerForm.get('lastname')?.hasError('required') && registerForm.get('lastname')?.touched">Lastname is required</span>
+        <span *ngIf="registerForm.get('lastname')?.hasError('pattern') && registerForm.get('lastname')?.touched">Enter a valid lastname</span>
+        <span>Lastname</span>
+      </label>
+    </div>
+
+    <label>
+      <input formControlName="email" class="input" type="email" placeholder="" required>
+      <span *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched">Email is required</span>
+      <span *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched">Enter a valid email</span>
+      <span>Email</span>
+    </label>
+
+    <label>
+      <input formControlName="password" class="input" type="password" placeholder="" required>
+      <span *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">Password is required</span>
+      <span *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched">Password must be at least 6 characters</span>
+      <span>Password</span>
+    </label>
+
+    <label>
+      <input formControlName="confirmPassword" class="input" type="password" placeholder="" required>
+      <span *ngIf="registerForm.get('confirmPassword')?.hasError('required') && registerForm.get('confirmPassword')?.touched">Confirm Password is required</span>
+      <span *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched">Passwords do not match</span>
+      <span>Confirm password</span>
+    </label>
+
+    <button type="submit" class="submit">Submit</button>
+    <p class="signin">Already have an account? <a routerLink="/login">Sign in</a> </p>
+  </form>
 </ion-content>

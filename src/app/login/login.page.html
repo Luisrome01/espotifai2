@@ -9,39 +9,53 @@
   </ion-toolbar>
 </ion-header>
 
-
-
 <ion-content class="ion-padding">
-  <div class="login-container">
-    <form *ngIf="loginForm" [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
-      <ion-item lines="none">
-        <ion-label position="stacked">Username (Correo electrónico)</ion-label>
-        <ion-input type="email" formControlName="username" placeholder="Ingrese su correo electrónico" clearInput></ion-input>
-      </ion-item>
-      <div *ngIf="loginForm.get('username')?.dirty && loginForm.get('username')?.invalid" class="validation-message">
-        <ion-label position="stacked" color="danger">Username (Correo electrónico)</ion-label>
-        <p *ngIf="loginForm.get('username')?.hasError('email')">Ingrese un correo electrónico válido.</p>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="login-container form">
+    <p class="title">Login</p>
+    <p class="message">Ingresa con tu cuenta para acceder a nuestra aplicación.</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="form">
+      <div class="flex">
+        <label>
+          <input class="input" type="email" placeholder="" required formControlName="username">
+          <span>Email</span>
+        </label>
       </div>
-      <ion-item lines="none">
-        <ion-label position="stacked">Contraseña</ion-label>
-        <ion-input type="password" formControlName="password" placeholder="Ingrese su contraseña" clearInput></ion-input>
-        <ion-icon name="lock-closed" slot="end"></ion-icon>
-      </ion-item>
+
+      <div *ngIf="loginForm.get('username')?.dirty && loginForm.get('username')?.invalid" class="validation-message">
+        <p *ngIf="loginForm.get('username')?.hasError('required')">El email es requerido.</p>
+        <p *ngIf="loginForm.get('username')?.hasError('email')">Ingrese un email válido.</p>
+      </div>
+
+      <div class="flex">
+        <label>
+          <input class="input" type="password" placeholder="" required formControlName="password">
+          <span>Password</span>
+        </label>
+      </div>
+
       <div *ngIf="loginForm.get('password')?.dirty && loginForm.get('password')?.invalid" class="validation-message">
         <p *ngIf="loginForm.get('password')?.hasError('required')">La contraseña es requerida.</p>
       </div>
-      <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" color="success">Login</ion-button>
+
+      <button class="submit" type="submit" [disabled]="loginForm.invalid">Login</button>
     </form>
 
-    
+    <p class="signin">¿No tienes una cuenta? <a (click)="goToRegister()">Regístrate</a></p>
   </div>
-  <ion-footer>
-    <ion-item class="register-link">
-      <ion-label class="ion-text-center">
-        ¿No tienes una cuenta?
-        <ion-router-link routerLink="/register">Regístrate</ion-router-link>
-      </ion-label>
-    </ion-item>
-   
-  </ion-footer>
+
 </ion-content>
+
+<ion-footer>
+  <!-- Aquí puedes agregar cualquier footer adicional -->
+</ion-footer>

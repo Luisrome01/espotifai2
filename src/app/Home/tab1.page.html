@@ -3,13 +3,18 @@
     <ion-title>
       Home
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/perfil']">
+        <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Home</ion-title>
+      <ion-title size="large">Homes</ion-title>
     </ion-toolbar>
   </ion-header>
 

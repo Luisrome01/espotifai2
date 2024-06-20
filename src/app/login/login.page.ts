@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  loginForm: FormGroup | null = null; // Asegúrate de inicializarlo como null
+  loginForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -21,18 +21,28 @@ export class LoginPage {
   }
 
   onLogin() {
-    if (this.loginForm && this.loginForm.valid) { // Añade una verificación aquí
-      // Aquí puedes añadir tu lógica de autenticación
+    if (this.loginForm.valid) {
       console.log('Username:', this.loginForm.value.username);
       console.log('Password:', this.loginForm.value.password);
 
       // Redirige a la página de tabs
       this.router.navigateByUrl('/tabs', { replaceUrl: true });
-    } else if (this.loginForm) {
+    } else {
       // Marca todos los controles como tocados para mostrar los mensajes de error
       Object.values(this.loginForm.controls).forEach(control => {
         control.markAsTouched();
       });
     }
+  }
+
+  handleRefresh(event: CustomEvent) {
+    setTimeout(() => {
+      location.reload();
+      event.detail.complete();
+    }, 2000);
+  }
+
+  goToRegister() {
+    this.router.navigateByUrl('/register');
   }
 }
