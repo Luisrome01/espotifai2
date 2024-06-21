@@ -46,14 +46,14 @@ export class SpotifyService {
     }
   }
 
-  getNewReleases(): Observable<any> {
+  getNewReleases(offset: number, limit: number): Observable<any> {
     return this.getAccessToken().pipe(
       switchMap((token) => {
-        const url = 'https://api.spotify.com/v1/browse/new-releases';
+        const url = `https://api.spotify.com/v1/browse/new-releases?offset=${offset}&limit=${limit}`;
         const headers = new HttpHeaders({
           Authorization: 'Bearer ' + token
         });
-
+  
         return this.http.get(url, { headers }).pipe(
           catchError(this.handleError)
         );
@@ -61,14 +61,49 @@ export class SpotifyService {
     );
   }
 
-  getArtists(artistIds: string): Observable<any> {
+  getPopularArtists(offset: number = 0, limit: number = 20): Observable<any> {
     return this.getAccessToken().pipe(
       switchMap((token) => {
-        const url = `https://api.spotify.com/v1/artists?ids=${artistIds}`;
+        const url = `https://api.spotify.com/v1/artists?offset=${offset}&limit=${limit}`;
         const headers = new HttpHeaders({
           Authorization: 'Bearer ' + token
         });
+  
+        return this.http.get(url, { headers }).pipe(
+          catchError(this.handleError)
+        );
+      })
+    );
+  }
+  
+  getArtists(artistIds: string[]): Observable<any> {
+    if (artistIds.length === 0) {
+      return of({ artists: [] });
+    }
+  
+    const ids = artistIds.join(',');
+    return this.getAccessToken().pipe(
+      switchMap((token) => {
+        const url = `https://api.spotify.com/v1/artists?ids=${ids}`;
+        const headers = new HttpHeaders({
+          Authorization: 'Bearer ' + token
+        });
+  
+        return this.http.get(url, { headers }).pipe(
+          catchError(this.handleError)
+        );
+      })
+    );
+  }
 
+  searchArtists(query: string, offset: number = 0, limit: number = 20): Observable<any> {
+    return this.getAccessToken().pipe(
+      switchMap((token) => {
+        const url = `https://api.spotify.com/v1/search?q=${query}&type=artist&offset=${offset}&limit=${limit}`;
+        const headers = new HttpHeaders({
+          Authorization: 'Bearer ' + token
+        });
+  
         return this.http.get(url, { headers }).pipe(
           catchError(this.handleError)
         );

@@ -11,7 +11,11 @@ import { AlbumArtistDetailModalComponent } from '../album-artist-detail-modal/al
 export class Tab1Page implements OnInit {
   newAlbums: any[] = [];
   artists: any[] = [];
-  artistIds: string = '2CIMQHirSU0MQqyYHq0eOx,57dN52uHvrHOxijzpIgu3E,1vCWHaC5f2uS3yhpwWbIA6';
+  currentAlbumOffset: number = 0;
+  currentArtistOffset: number = 0;
+  limit: number = 6; // Number of items to load per request
+  allArtistsLoaded: boolean = false;
+  allAlbumsLoaded: boolean = false;
 
   constructor(
     private spotifyService: SpotifyService,
@@ -20,30 +24,68 @@ export class Tab1Page implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadInitialData();
+  }
+
+  loadInitialData() {
     this.getNewAlbums();
     this.getArtists();
   }
 
-  getNewAlbums() {
-    this.spotifyService.getNewReleases().subscribe(
+  getNewAlbums(event?: any) {
+    if (this.allAlbumsLoaded) {
+      if (event) {
+        event.target.complete();
+      }
+      return;
+    }
+
+    this.spotifyService.getNewReleases(this.currentAlbumOffset, this.limit).subscribe(
       (data: any) => {
-        this.newAlbums = data.albums.items.slice(0, 6); // Limitamos a 6 álbumes
+        this.newAlbums = this.newAlbums.concat(data.albums.items);
+        this.currentAlbumOffset += this.limit;
+        if (data.albums.items.length < this.limit) {
+          this.allAlbumsLoaded = true;
+        }
+        if (event) {
+          event.target.complete();
+        }
       },
       (error) => {
         console.error('Error fetching new releases:', error);
         this.presentErrorToast('Error fetching new releases');
+        if (event) {
+          event.target.complete();
+        }
       }
     );
   }
 
-  getArtists() {
-    this.spotifyService.getArtists(this.artistIds).subscribe(
+  getArtists(event?: any) {
+    if (this.allArtistsLoaded) {
+      if (event) {
+        event.target.complete();
+      }
+      return;
+    }
+
+    this.spotifyService.searchArtists('a', this.currentArtistOffset, this.limit).subscribe(
       (data: any) => {
-        this.artists = data.artists;
+        this.artists = this.artists.concat(data.artists.items);
+        this.currentArtistOffset += this.limit;
+        if (data.artists.items.length < this.limit) {
+          this.allArtistsLoaded = true;
+        }
+        if (event) {
+          event.target.complete();
+        }
       },
       (error) => {
         console.error('Error fetching artists:', error);
         this.presentErrorToast('Error fetching artists');
+        if (event) {
+          event.target.complete();
+        }
       }
     );
   }
@@ -55,6 +97,13 @@ export class Tab1Page implements OnInit {
       position: 'bottom'
     });
     toast.present();
+  }
+
+  handleRefresh(event: CustomEvent) {
+    setTimeout(() => {
+      location.reload();
+      event.detail.complete();
+    }, 2000);
   }
 
   async openDetailModal(details: any, type: 'album' | 'artist') {
@@ -75,4 +124,10 @@ export class Tab1Page implements OnInit {
   openArtist(artist: any) {
     this.openDetailModal(artist, 'artist');
   }
+
+  loadData(event: any) {
+    this.getNewAlbums(event);
+    this.getArtists(event);
+  }
 }
+

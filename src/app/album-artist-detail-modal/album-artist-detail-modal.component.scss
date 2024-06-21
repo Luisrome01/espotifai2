@@ -1,0 +1,45 @@
+ion-header {
+    --ion-background-color: #1a1a1a; /* Color de fondo oscuro para el encabezado */
+    color: #ffffff; /* Texto blanco en el encabezado */
+  }
+  
+  ion-toolbar {
+    --background: #1a1a1a; /* Color de fondo oscuro para la barra de herramientas */
+    --color: #ffffff; /* Color de texto blanco para la barra de herramientas */
+  }
+  
+  ion-card {
+    background-color: #2b2b2b; /* Fondo oscuro para las tarjetas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    color: #ffffff; /* Texto blanco en las tarjetas */
+  }
+  
+  ion-card-title {
+    font-weight: bold;
+  }
+  
+  ion-card-subtitle {
+    color: #cccccc; /* Color de subtítulo gris claro */
+  }
+  
+  .content {
+    --ion-background-color: #1a1a1a; /* Fondo oscuro para el contenido */
+    color: #ffffff; /* Texto blanco en el contenido */
+  }
+  
+  .scroll-content {
+    text-align: center;
+    color: #1a9855; /* Texto en tono verdoso */
+  }
+  
+  .card {
+    cursor: pointer;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el mouse */
+  }
+  

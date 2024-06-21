@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Home
-    </ion-title>
+  <ion-toolbar color="dark">
+    <ion-title>Home</ion-title>
     <ion-buttons slot="end">
       <ion-button [routerLink]="['/perfil']">
         <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
@@ -11,11 +9,23 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+<ion-content class="content">
   <ion-grid>
     <ion-row>
       <ion-col size="12">
-        <ion-card *ngFor="let album of newAlbums" (click)="openAlbum(album)">
+        <ion-card *ngFor="let album of newAlbums" (click)="openAlbum(album)" class="card">
           <img [src]="album.images[0]?.url" alt="Album cover">
           <ion-card-header>
             <ion-card-title>{{ album.name }}</ion-card-title>
@@ -26,7 +36,7 @@
     </ion-row>
     <ion-row>
       <ion-col size="12">
-        <ion-card *ngFor="let artist of artists" (click)="openArtist(artist)">
+        <ion-card *ngFor="let artist of artists" (click)="openArtist(artist)" class="card">
           <img [src]="artist.images[0]?.url" alt="Artist image">
           <ion-card-header>
             <ion-card-title>{{ artist.name }}</ion-card-title>
@@ -36,4 +46,9 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..." class="scroll-content">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
