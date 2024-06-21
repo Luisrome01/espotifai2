@@ -18,6 +18,15 @@
       <ion-card-content>
         <p>Release Date: {{ details.release_date }}</p>
         <p>Total Tracks: {{ details.total_tracks }}</p>
+        <p>Popularity: {{ details.popularity }}</p>
+        <p>Album Type: {{ details.album_type }}</p>
+        <p>External Links:
+          <a *ngFor="let link of details.external_urls | keyvalue" [href]="link.value" target="_blank">{{ link.key }}</a>
+        </p>
+        <p>Songs:</p>
+        <ul>
+          <li *ngFor="let track of tracks">{{ track.name }}</li>
+        </ul>
       </ion-card-content>
     </ion-card>
   </div>
@@ -31,6 +40,17 @@
       <ion-card-content>
         <p>Followers: {{ details.followers.total }}</p>
         <p>Popularity: {{ details.popularity }}</p>
+        <p>Country: {{ details.country }}</p>
+        <p *ngIf="details.albums">Number of Albums: {{ details.albums.total }}</p>
+        <p *ngIf="details.tracks">Number of Tracks: {{ details.tracks.total }}</p>
+        <p>External Links:
+          <a *ngFor="let link of details.external_urls | keyvalue" [href]="link.value" target="_blank">{{ link.key }}</a>
+        </p>
+        <p>Related Artists:
+          <span *ngFor="let artist of details.related_artists; let i = index">
+            <a *ngIf="i < 5" [routerLink]="['/artist', artist.id]">{{ artist.name }}</a>{{ i < 4 ? ', ' : '' }}
+          </span>
+        </p>
       </ion-card-content>
     </ion-card>
   </div>

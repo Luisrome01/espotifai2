@@ -76,13 +76,29 @@ export class SpotifyService {
     );
   }
 
+  getAlbumTracks(albumId: string): Observable<any> {
+    return this.getAccessToken().pipe(
+      switchMap((token) => {
+        const url = `https://api.spotify.com/v1/albums/${albumId}/tracks`;
+        const headers = new HttpHeaders({
+          Authorization: 'Bearer ' + token
+        });
+
+        return this.http.get(url, { headers }).pipe(
+          catchError(this.handleError)
+        );
+      })
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {
       console.error(
         `Backend returned code ${error.status}, ` +
-        `body was: ${JSON.stringify(error.error)}`);
+        `body was: ${JSON.stringify(error.error)}`
+      );
     }
     return throwError('Something bad happened; please try again later.');
   }
