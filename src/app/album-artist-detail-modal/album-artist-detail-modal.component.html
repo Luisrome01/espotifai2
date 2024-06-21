@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ type === 'album' ? 'Album Details' : 'Artist Details' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="type === 'album'">
+    <ion-card>
+      <img [src]="details.images[0]?.url" alt="Album cover">
+      <ion-card-header>
+        <ion-card-title>{{ details.name }}</ion-card-title>
+        <ion-card-subtitle>{{ details.artists[0].name }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Release Date: {{ details.release_date }}</p>
+        <p>Total Tracks: {{ details.total_tracks }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div *ngIf="type === 'artist'">
+    <ion-card>
+      <img [src]="details.images[0]?.url" alt="Artist image">
+      <ion-card-header>
+        <ion-card-title>{{ details.name }}</ion-card-title>
+        <ion-card-subtitle>{{ details.genres.join(', ') }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Followers: {{ details.followers.total }}</p>
+        <p>Popularity: {{ details.popularity }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -10,8 +10,12 @@ export class PerfilPage {
   constructor(private router: Router) {}
 
   logout() {
-    // Aquí puedes añadir cualquier lógica adicional para el logout
+    
     console.log('Logging out...');
     this.router.navigate(['/login']);
   }
+  goToTabs() {
+    this.router.navigate(['/tabs']);
+  }
 }
+
