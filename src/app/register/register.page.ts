@@ -12,16 +12,6 @@ export class RegisterPage {
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm = this.fb.group({
-      firstname: ['', [
-        Validators.required,
-        Validators.maxLength(10),
-        Validators.pattern('[a-zA-Z ]*')
-      ]],
-      lastname: ['', [
-        Validators.required,
-        Validators.maxLength(10),
-        Validators.pattern('[a-zA-Z ]*')
-      ]],
       email: ['', [
         Validators.required,
         Validators.email
@@ -39,13 +29,34 @@ export class RegisterPage {
   onSubmit() {
     if (this.registerForm.valid) {
       console.log(this.registerForm.value);
-      this.router.navigate(['/login']);
+      const { email, password } = this.registerForm.value;
+      fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      })
+      .then(response => response.json())
+      .then(data => {
+        
+          // Redirige a la página de tabs
+          this.router.navigate(['/login']);
+
+      })
+      .catch(error => {
+        console.error('Error al iniciar sesión:', error);
+        alert('Ocurrió un error al iniciar sesión. Por favor, intenta de nuevo más tarde.');
+      });
     } else {
       console.log('Form is invalid');
       // Mark all fields as touched to display errors
       this.markFormGroupTouched(this.registerForm);
     }
   }
+
+
+  
 
   markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {

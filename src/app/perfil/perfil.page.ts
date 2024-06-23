@@ -13,6 +13,7 @@ export class PerfilPage {
     
     console.log('Logging out...');
     this.router.navigate(['/login']);
+    
   }
   goToTabs() {
     this.router.navigate(['/tabs']);

@@ -27,14 +27,14 @@
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="form">
       <div class="flex">
         <label>
-          <input class="input" type="email" placeholder="" required formControlName="username">
+          <input class="input" type="email" placeholder="" required formControlName="email">
           <span>Email</span>
         </label>
       </div>
 
-      <div *ngIf="loginForm.get('username')?.dirty && loginForm.get('username')?.invalid" class="validation-message">
-        <p *ngIf="loginForm.get('username')?.hasError('required')">El email es requerido.</p>
-        <p *ngIf="loginForm.get('username')?.hasError('email')">Ingrese un email válido.</p>
+      <div *ngIf="loginForm.get('email')?.dirty && loginForm.get('email')?.invalid" class="validation-message">
+        <p *ngIf="loginForm.get('email')?.hasError('required')">El email es requerido.</p>
+        <p *ngIf="loginForm.get('email')?.hasError('email')">Ingrese un email válido.</p>
       </div>
 
       <div class="flex">

@@ -6,6 +6,17 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+  
 <ion-content>
   <ion-searchbar placeholder="Buscar canciones" [(ngModel)]="searchTerm" (ionInput)="searchItems($event)"></ion-searchbar>
 

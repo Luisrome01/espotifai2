@@ -22,21 +22,7 @@
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form">
     <p class="title">Register</p>
     <p class="message">Signup now and get full access to our app.</p>
-    <div class="flex">
-      <label>
-        <input formControlName="firstname" class="input" type="text" placeholder="" required>
-        <span *ngIf="registerForm.get('firstname')?.hasError('required') && registerForm.get('firstname')?.touched">Firstname is required</span>
-        <span *ngIf="registerForm.get('firstname')?.hasError('pattern') && registerForm.get('firstname')?.touched">Enter a valid firstname</span>
-        <span>Firstname</span>
-      </label>
-
-      <label>
-        <input formControlName="lastname" class="input" type="text" placeholder="" required>
-        <span *ngIf="registerForm.get('lastname')?.hasError('required') && registerForm.get('lastname')?.touched">Lastname is required</span>
-        <span *ngIf="registerForm.get('lastname')?.hasError('pattern') && registerForm.get('lastname')?.touched">Enter a valid lastname</span>
-        <span>Lastname</span>
-      </label>
-    </div>
+   
 
     <label>
       <input formControlName="email" class="input" type="email" placeholder="" required>

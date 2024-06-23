@@ -49,6 +49,13 @@ export class Tab2Page {
     }
   }
 
+
+  handleRefresh(event: CustomEvent) {
+    setTimeout(() => {
+      location.reload();
+      event.detail.complete();
+    }, 2000);
+  }
   getAccessToken() {
     const tokenUrl = 'https://accounts.spotify.com/api/token';
     const body = new URLSearchParams();
