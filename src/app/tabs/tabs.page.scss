@@ -1,1 +1,39 @@
-
+/* Estilos generales de los tabs */
+ion-tabs {
+    --background: #f8f8f8;
+    --color: #999999;
+    --color-selected: #1a9855;
+  }
+  
+  ion-tab-bar {
+    padding: 0.5rem 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  ion-tab-button {
+    --padding-start: 0.5rem;
+    --padding-end: 0.5rem;
+    --padding-top: 0.25rem;
+    --padding-bottom: 0.25rem;
+    --margin-top: 0;
+    --margin-bottom: 0;
+    --margin-start: 0;
+    --margin-end: 0;
+    font-size: 0.8rem;
+    --color: #999999;
+    --color-selected: #1a9855;
+  }
+  
+  ion-tab-button.tab-selected {
+    --color: var(--color-selected);
+  }
+  
+  ion-tab-button ion-icon {
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  ion-tab-button ion-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+  }

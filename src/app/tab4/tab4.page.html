@@ -1,0 +1,35 @@
+<ion-content>
+  <div class="container">
+    <h1>Biblioteca</h1>
+
+    <div class="playlist-list">
+      <div class="playlist favorite">
+        <div class="playlist-header">
+          <h2>Mis Me Gusta</h2>
+          <ion-icon name="heart" class="heart-icon"></ion-icon>
+        </div>
+      </div>
+      <div class="playlist" *ngFor="let playlist of playlists; let i = index">
+        <div class="playlist-header">
+          <ng-container *ngIf="!playlist.isEditing; else editingName">
+            <h2>{{ playlist.title }}</h2>
+            <div class="icon-container">
+              <ion-icon name="create" class="edit-icon" (click)="editPlaylistTitle(i)"></ion-icon>
+              <ion-icon name="close" class="delete-icon" (click)="showDeleteConfirmation(i)"></ion-icon>
+            </div>
+          </ng-container>
+          <ng-template #editingName>
+            <input type="text" [(ngModel)]="playlist.title" (blur)="savePlaylistTitle(i)" (keyup.enter)="savePlaylistTitle(i)">
+            <ion-icon name="checkmark" class="save-icon" style="color: #1DB954;" (click)="savePlaylistTitle(i)"></ion-icon>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button class="create-playlist" (click)="createPlaylist()">
+        <ion-icon name="add" class="add-icon"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+</ion-content>
