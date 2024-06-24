@@ -49,6 +49,10 @@
       </div>
 
       <button class="submit" type="submit" [disabled]="loginForm.invalid">Login</button>
+      <div *ngIf="loginError" class="ion-text-center ion-margin-top">
+        <ion-text color="danger">{{ loginError }}</ion-text>
+      </div>
+      
     </form>
 
     <p class="signin">¿No tienes una cuenta? <a (click)="goToRegister()">Regístrate</a></p>

@@ -9,6 +9,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginPage {
   loginForm: FormGroup;
+  loginError: string = '';
+  email: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -23,7 +25,10 @@ export class LoginPage {
   onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-  
+
+      console.log('Email:', email);
+      console.log('Contraseña:', password);
+
       fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: {
@@ -34,15 +39,16 @@ export class LoginPage {
       .then(response => response.json())
       .then(data => {
         if (data.token) {
-          // Redirige a la página de tabs
-          this.router.navigateByUrl('/tabs', { replaceUrl: true });
+          console.log('Token de sesión:', data.token);
+          this.email = email; // Guarda el email del usuario
+          this.router.navigateByUrl('/tabs/profile', { replaceUrl: true });
         } else {
-          alert('Credenciales inválidas');
+          this.loginError = 'Credenciales inválidas';
         }
       })
       .catch(error => {
         console.error('Error al iniciar sesión:', error);
-        alert('Ocurrió un error al iniciar sesión. Por favor, intenta de nuevo más tarde.');
+        this.loginError = 'Ocurrió un error al iniciar sesión. Por favor, intenta de nuevo más tarde.';
       });
     } else {
       Object.values(this.loginForm.controls).forEach(control => {
@@ -50,6 +56,7 @@ export class LoginPage {
       });
     }
   }
+
 
   handleRefresh(event: CustomEvent) {
     setTimeout(() => {

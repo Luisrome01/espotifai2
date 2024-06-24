@@ -8,11 +8,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlbumArtistDetailModalComponent } from './album-artist-detail-modal/album-artist-detail-modal.component';
-
+import { LoginPageModule } from './login/login.module';
 
 @NgModule({
   declarations: [AppComponent, ModalComponent, AlbumArtistDetailModalComponent, ],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, HttpClientModule, LoginPageModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
