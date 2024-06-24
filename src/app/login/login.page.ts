@@ -25,10 +25,10 @@ export class LoginPage {
   onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-
+  
       console.log('Email:', email);
       console.log('Contraseña:', password);
-
+  
       fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: {
@@ -40,8 +40,9 @@ export class LoginPage {
       .then(data => {
         if (data.token) {
           console.log('Token de sesión:', data.token);
-          this.email = email; // Guarda el email del usuario
-          this.router.navigateByUrl('/tabs/profile', { replaceUrl: true });
+          localStorage.setItem('authToken', data.token); // Guardar el token en localStorage
+          this.email = email;
+          this.router.navigateByUrl('/tabs', { replaceUrl: true });
         } else {
           this.loginError = 'Credenciales inválidas';
         }
@@ -56,6 +57,8 @@ export class LoginPage {
       });
     }
   }
+  
+
 
 
   handleRefresh(event: CustomEvent) {
