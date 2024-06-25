@@ -33,48 +33,49 @@ export class ModalEmailComponent implements OnInit {
 
   updateEmail() {
     if (this.updateEmailForm.valid) {
-      const newEmail = this.updateEmailForm.get('email')?.value;
-      const authToken = localStorage.getItem('authToken');
+        const newEmail = this.updateEmailForm.get('email')?.value;
+        const authToken = localStorage.getItem('authToken');
 
-      if (!authToken) {
-        console.error('No hay token de autenticación disponible.');
-        return;
-      }
+        if (!authToken) {
+            console.error('No hay token de autenticación disponible.');
+            return;
+        }
 
-      const headers = new HttpHeaders({
-        Authorization: `Bearer ${authToken}`
-      });
+        const headers = new HttpHeaders({
+            Authorization: `Bearer ${authToken}`
+        });
 
-      const requestBody = { newEmail };
+        const requestBody = { newEmail };
 
-      this.http.post('http://localhost:5000/api/users/updateEmail', requestBody, { headers })
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = 'Error desconocido al actualizar el email.';
+        this.http.put('http://localhost:5000/api/users/updateEmail', requestBody, { headers })
+            .pipe(
+                catchError((error: HttpErrorResponse) => {
+                    let errorMessage = 'Error desconocido al actualizar el email.';
 
-            if (error.status === 404) {
-              errorMessage = 'No se encontró la URL de actualización del email en el servidor.';
-            } else {
-              errorMessage = `Código de error: ${error.status}, mensaje: ${error.message}`;
-            }
+                    if (error.status === 404) {
+                        errorMessage = 'No se encontró la URL de actualización del email en el servidor.';
+                    } else {
+                        errorMessage = `Código de error: ${error.status}, mensaje: ${error.message}`;
+                    }
 
-            console.error(errorMessage);
-            this.presentErrorAlert(errorMessage); // Mostrar alerta de error al usuario
-            return throwError(errorMessage);
-          })
-        )
-        .subscribe(
-          (response) => {
-            console.log('Email actualizado correctamente:', response);
-            this.dismissModal();
-          },
-          (error) => {
-            console.error('Error al actualizar email:', error);
-            // Puedes manejar aquí cualquier lógica adicional de error si es necesario
-          }
-        );
+                    console.error(errorMessage);
+                    this.presentErrorAlert(errorMessage); // Mostrar alerta de error al usuario
+                    return throwError(errorMessage);
+                })
+            )
+            .subscribe(
+                (response) => {
+                    console.log('Email actualizado correctamente:', response);
+                    this.dismissModal();
+                },
+                (error) => {
+                    console.error('Error al actualizar email:', error);
+                    // Puedes manejar aquí cualquier lógica adicional de error si es necesario
+                }
+            );
     }
-  }
+}
+
 
   async presentErrorAlert(message: string) {
     const alert = await this.alertController.create({

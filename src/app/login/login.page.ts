@@ -39,8 +39,10 @@ export class LoginPage {
       .then(response => response.json())
       .then(data => {
         if (data.token) {
-          console.log('Token de sesión:', data.token);
-          localStorage.setItem('authToken', data.token); // Guardar el token en localStorage
+          localStorage.setItem('authToken', data.token);
+          localStorage.setItem('userEmail', email);
+          console.log('Token guardado en localStorage:', localStorage.getItem('authToken'));
+          console.log('Email guardado en localStorage:', localStorage.getItem('userEmail'));
           this.email = email;
           this.router.navigateByUrl('/tabs', { replaceUrl: true });
         } else {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
@@ -9,8 +9,9 @@ import { ModalEmailComponent } from './modalemail.component.'; // Asegúrate de 
   templateUrl: './perfil.page.html',
   styleUrls: ['./perfil.page.scss'],
 })
-export class PerfilPage {
+export class PerfilPage implements OnInit {
   updateEmailForm: FormGroup;
+  userEmail: string | null = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,9 +23,14 @@ export class PerfilPage {
     });
   }
 
+  ngOnInit() {
+    this.userEmail = localStorage.getItem('userEmail') || '';
+    
+  }
+
   logout() {
     console.log('Logging out...');
-    // Implementa la lógica de logout si es necesario
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 
@@ -35,7 +41,7 @@ export class PerfilPage {
   async openUpdateEmailModal() {
     const modal = await this.modalController.create({
       component: ModalEmailComponent,
-      componentProps: { currentEmail: this.updateEmailForm.get('email')?.value }
+      componentProps: { currentEmail: this.userEmail }
     });
 
     modal.onDidDismiss().then((data) => {
@@ -43,6 +49,8 @@ export class PerfilPage {
         // Actualizar el email con los datos recibidos si es necesario
         const updatedEmail = data.data.newEmail;
         this.updateEmailForm.patchValue({ email: updatedEmail });
+        localStorage.setItem('userEmail', updatedEmail);
+        this.userEmail = updatedEmail;
       }
     });
 
@@ -54,6 +62,7 @@ export class PerfilPage {
       // Implementa la lógica de actualización del email aquí
       const updatedEmail = this.updateEmailForm.get('email')?.value;
       console.log('Updating email:', updatedEmail);
+      // Aquí puedes agregar lógica para actualizar el email en el servidor si es necesario
     }
   }
 }
