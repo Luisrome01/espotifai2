@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { ModalEmailComponent } from './modalemail.component.'; // Asegúrate de que la ruta sea correcta
-import { ModalDeleteComponent } from '../modaldelete/modaldelete.component'
+import { ModalEmailComponent } from './modalemail.component.';
+import { ModalDeleteComponent } from '../modaldelete/modaldelete.component';
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
@@ -35,6 +36,15 @@ export class PerfilPage implements OnInit {
     this.router.navigate(['/login']);
   }
 
+
+  handleRefresh(event: CustomEvent) {
+    setTimeout(() => {
+      location.reload();
+      event.detail.complete();
+    }, 2000);
+  }
+
+  
   goToTabs() {
     this.router.navigate(['/tabs']);
   }
@@ -47,12 +57,14 @@ export class PerfilPage implements OnInit {
 
     modal.onDidDismiss().then((data) => {
       if (data && data.data) {
-        // Actualizar el email con los datos recibidos si es necesario
         const updatedEmail = data.data.newEmail;
         this.updateEmailForm.patchValue({ email: updatedEmail });
         localStorage.setItem('userEmail', updatedEmail);
         this.userEmail = updatedEmail;
       }
+
+      // Refrescar la página después de cerrar el modal
+      this.reloadProfilePage();
     });
 
     return await modal.present();
@@ -63,7 +75,7 @@ export class PerfilPage implements OnInit {
       const updatedEmail = this.updateEmailForm.get('email')?.value;
       console.log('Updating email:', updatedEmail);
       localStorage.setItem('userEmail', updatedEmail);
-      this.userEmail = updatedEmail;
+      this.userEmail = updatedEmail; 
     }
   }
 
@@ -90,4 +102,8 @@ export class PerfilPage implements OnInit {
     return await modal.present();
   }
 
+  // Método para recargar la página de perfil
+  reloadProfilePage() {
+    window.location.reload();
+  }
 }

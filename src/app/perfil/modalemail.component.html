@@ -8,7 +8,21 @@
     </ion-toolbar>
   </ion-header>
   
+
+
   <ion-content>
+
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="chevron-down-circle-outline"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing..."
+      >
+      </ion-refresher-content>
+    </ion-refresher>
+
+
     <form [formGroup]="updateEmailForm" (ngSubmit)="updateEmail()">
       <ion-item>
         <ion-label position="floating">Email</ion-label>

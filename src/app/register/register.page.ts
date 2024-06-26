@@ -30,7 +30,7 @@ export class RegisterPage {
     if (this.registerForm.valid) {
       console.log(this.registerForm.value);
       const { email, password } = this.registerForm.value;
-      fetch('http://localhost:5000/api/auth/register', {
+      fetch('http://192.168.1.115:5000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -29,7 +29,7 @@ export class LoginPage {
       console.log('Email:', email);
       console.log('Contraseña:', password);
   
-      fetch('http://localhost:5000/api/auth/login', {
+      fetch('http://192.168.1.115:5000/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
