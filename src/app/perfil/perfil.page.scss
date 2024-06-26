@@ -3,4 +3,110 @@
     font-size: 18px; /* Tamaño de la fuente */
     font-weight: bold; /* Peso de la fuente */
   }
+  /* En tu archivo .css */
+.gender-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: hidden;
+    padding: 1.5rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 0 0.375rem rgba(0, 0, 0, 0.31);
+  }
+  
+  .gender-selection .title {
+    text-align: center;
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #4a4a4a;
+  }
+  
+  .gender-selection .options {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .gender-selection .option {
+    position: relative;
+    display: flex;
+    height: 50px;
+    width: 50px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .gender-selection .radio {
+    position: absolute;
+    z-index: 10;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    opacity: 0;
+  }
+  
+  .gender-selection .background {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    padding: 1rem;
+    box-shadow: 0 0 0.375rem rgba(0, 0, 0, 0.31);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .gender-selection .radio:checked ~ .background {
+    transform: scale(1.1);
+    box-shadow: 0 0 0.125rem rgba(0, 0, 0, 0.31);
+  }
+  
+  .gender-selection .overlay {
+    position: absolute;
+    z-index: -10;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    transition: transform 0.5s;
+  }
+  
+  .gender-selection .radio:checked ~ .overlay {
+    transform: scale(5);
+  }
+  
+  .gender-selection .icon {
+    position: absolute;
+  }
+  
+  .gender-selection #radio-male ~ .background {
+    background-color: #bfdbfe;
+  }
+  
+  .gender-selection #radio-male ~ .overlay {
+    background-color: #93c5fd;
+  }
+  
+  .gender-selection #radio-female ~ .background {
+    background-color: #fecdd3;
+  }
+  
+  .gender-selection #radio-female ~ .overlay {
+    background-color: #fda4af;
+  }
+  
+  .gender-selection #radio-non-binary ~ .background {
+    background-color: #e9d5ff;
+  }
+  
+  .gender-selection #radio-non-binary ~ .overlay {
+    background-color: #c4b5fd;
+  }
+  
+  .gender-selection #radio-none ~ .background {
+    background-color: #f5f5f5;
+  }
+  
+  .gender-selection #radio-none ~ .overlay {
+    background-color: #e5e5e5;
+  }
   

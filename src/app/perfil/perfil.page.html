@@ -11,5 +11,39 @@
   <ion-button color="danger" (click)="logout()">Logout</ion-button>
   <ion-button color="danger" (click)="goToTabs()">Go to Tab 1</ion-button>
   <ion-button color="primary" (click)="openUpdateEmailModal()">Update Email</ion-button>
-  <ion-button color="primary" (click)="openUpdateEmailModal()">Delete User</ion-button>
+  <!-- Agrega esto en la ubicación deseada en tu archivo HTML -->
+<ion-button expand="block" (click)="openDeleteAccountModal()">Delete Account</ion-button>
+
+
+
+<div class="gender-selection">
+  <span class="title">Por favor selecciona tu género</span>
+  <div class="options">
+    <div class="option" (click)="selectGender('male')">
+      <input type="radio" id="radio-male" name="gender" value="male" class="radio" />
+      <div class="background"></div>
+      <div class="overlay"></div>
+      <ion-icon name="male" class="icon text-blue-400" size="large"></ion-icon>
+    </div>
+    <div class="option" (click)="selectGender('female')">
+      <input type="radio" id="radio-female" name="gender" value="female" class="radio" />
+      <div class="background"></div>
+      <div class="overlay"></div>
+      <ion-icon name="female" class="icon text-pink-400" size="large"></ion-icon>
+    </div>
+    <div class="option" (click)="selectGender('non-binary')">
+      <input type="radio" id="radio-non-binary" name="gender" value="non-binary" class="radio" />
+      <div class="background"></div>
+      <div class="overlay"></div>
+      <ion-icon name="transgender" class="icon text-purple-400" size="large"></ion-icon>
+    </div>
+    <div class="option" (click)="selectGender('none')">
+      <input type="radio" id="radio-none" name="gender" value="none" class="radio" />
+      <div class="background"></div>
+      <div class="overlay"></div>
+      <ion-icon name="close" class="icon text-neutral-400" size="large"></ion-icon>
+    </div>
+  </div>
+</div>
+
 </ion-content>

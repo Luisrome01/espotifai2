@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AlbumArtistDetailModalComponent } from './album-artist-detail-modal/album-artist-detail-modal.component';
 import { LoginPageModule } from './login/login.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ModalDeleteModule } from './modaldelete/modaldelete.module';
 /*import { AuthInterceptor } from './auth.interceptor.interceptor';*/
 @NgModule({
   declarations: [AppComponent, ModalComponent, AlbumArtistDetailModalComponent, ],

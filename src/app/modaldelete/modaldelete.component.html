@@ -1,3 +1,18 @@
-<p>
-  modaldelete works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Delete Account</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="deleteAccountForm" (ngSubmit)="verifyCredentials()">
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input formControlName="email" type="email" required></ion-input>
+    </ion-item>
+    <ion-button expand="full" type="submit">Verify and Delete Account</ion-button>
+  </form>
+</ion-content>

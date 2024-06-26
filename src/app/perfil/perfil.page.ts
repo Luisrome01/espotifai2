@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ModalEmailComponent } from './modalemail.component.'; // Asegúrate de que la ruta sea correcta
-
+import { ModalDeleteComponent } from '../modaldelete/modaldelete.component'
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
@@ -12,6 +12,7 @@ import { ModalEmailComponent } from './modalemail.component.'; // Asegúrate de 
 export class PerfilPage implements OnInit {
   updateEmailForm: FormGroup;
   userEmail: string | null = '';
+  selectedGender: string | null = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,7 +26,7 @@ export class PerfilPage implements OnInit {
 
   ngOnInit() {
     this.userEmail = localStorage.getItem('userEmail') || '';
-    
+    this.selectedGender = localStorage.getItem('userGender') || '';
   }
 
   logout() {
@@ -59,10 +60,34 @@ export class PerfilPage implements OnInit {
 
   updateEmail() {
     if (this.updateEmailForm.valid) {
-      // Implementa la lógica de actualización del email aquí
       const updatedEmail = this.updateEmailForm.get('email')?.value;
       console.log('Updating email:', updatedEmail);
-      // Aquí puedes agregar lógica para actualizar el email en el servidor si es necesario
+      localStorage.setItem('userEmail', updatedEmail);
+      this.userEmail = updatedEmail;
     }
   }
+
+  selectGender(gender: string) {
+    this.selectedGender = gender;
+    localStorage.setItem('userGender', gender);
+    console.log('Selected Gender:', gender);
+  }
+
+  async openDeleteAccountModal() {
+    const modal = await this.modalController.create({
+      component: ModalDeleteComponent,
+    });
+
+    modal.onDidDismiss().then((data) => {
+      if (data && data.data && data.data.success) {
+        console.log('User account deleted successfully');
+        this.logout(); // Opcional: puedes cerrar la sesión automáticamente después de la eliminación
+      } else {
+        console.log('User account not deleted');
+      }
+    });
+
+    return await modal.present();
+  }
+
 }
