@@ -2,7 +2,7 @@
   <ion-toolbar color="white">
     <ion-title>Home</ion-title>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['/perfil']">
+      <ion-button (click)="goToProfile()">
         <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>

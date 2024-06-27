@@ -20,13 +20,80 @@
   
   
 
-.welcome-message {
-    color: #3366ff; /* Color del texto */
-    font-size: 18px; /* Tamaño de la fuente */
-    font-weight: bold; /* Peso de la fuente */
+
+  ion-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
-  /* En tu archivo .css */
+  
+  .welcome-message {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333; /* Gris oscuro */
+    padding: 20px;
+    background-color: #FFFFFF; /* Blanco */
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  
+  ion-button {
+    margin: 10px 20px;
+  }
+  
+  
+  .custom-button {
+    width: calc(100% - 40px); /* To account for margins */
+    margin: 20px 20px;
+    --background: #1DB954; /* Spotify green color */
+    --background-activated: #1ED760; /* Slightly lighter green for active state */
+    --background-focused: #1DB954;
+    --background-hover: #1ED760;
+    --background-pressed: #1DB954;
+    --border-radius: 10px;
+    --color: white; /* Text color */
+    --box-shadow: none; /* Remove any shadow to avoid default blue shadow */
+  }
+  
+  
+  
+  .custom-button:hover {
+    --background: #1ED760; /* Hover state */
+  }
+  
+  .custom-button:active {
+    --background: #1DB954; /* Active state */
+  }
+  
+
+
+  .spacer {
+    flex-grow: 1;
+  }
+  
+  .logout-button {
+    // Aplica la forma ovalada
+    @extend .custom-button;
+  
+    // Centra el botón horizontalmente
+    margin: 90px;
+  
+    margin-top: 180px; 
+    max-width: 200px; 
+  
+    
+  }
+  
+
+
+
+
+  
+
+
 .gender-selection {
+  margin: 50px 20px;
     display: flex;
     flex-direction: column;
     gap: 1rem;

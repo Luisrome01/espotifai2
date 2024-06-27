@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from './spotify.service';
 import { ModalController, ToastController } from '@ionic/angular';
 import { AlbumArtistDetailModalComponent } from '../album-artist-detail-modal/album-artist-detail-modal.component';
-
+import { NavController } from '@ionic/angular';
 @Component({
   selector: 'app-tab1',
   templateUrl: './tab1.page.html',
@@ -13,14 +13,15 @@ export class Tab1Page implements OnInit {
   artists: any[] = [];
   currentAlbumOffset: number = 0;
   currentArtistOffset: number = 0;
-  limit: number = 6; // Number of items to load per request
+  limit: number = 6; 
   allArtistsLoaded: boolean = false;
   allAlbumsLoaded: boolean = false;
 
   constructor(
     private spotifyService: SpotifyService,
     private toastController: ToastController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private navController: NavController
   ) {}
 
   ngOnInit() {
@@ -106,6 +107,14 @@ export class Tab1Page implements OnInit {
     }, 2000);
   }
 
+  goToProfile() {
+    this.navController.navigateForward('/perfil', {
+      animated: true,
+      animationDirection: 'back' 
+    });
+  }
+
+
   async openDetailModal(details: any, type: 'album' | 'artist') {
     const modal = await this.modalController.create({
       component: AlbumArtistDetailModalComponent,
@@ -130,4 +139,6 @@ export class Tab1Page implements OnInit {
     this.getArtists(event);
   }
 }
+
+
 
