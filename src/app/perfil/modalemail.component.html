@@ -3,7 +3,8 @@
     <ion-toolbar>
       <ion-title>Update Email</ion-title>
       <ion-buttons slot="end">
-        <ion-button (click)="dismissModal()">Close</ion-button>
+        <ion-button color="success" (click)="dismissModal()">Close</ion-button>
+
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -28,7 +29,8 @@
         <ion-label position="floating">Email</ion-label>
         <ion-input formControlName="email" type="email"></ion-input>
       </ion-item>
-      <ion-button type="submit" [disabled]="!updateEmailForm.valid">Update Email</ion-button>
+      <ion-button type="submit" color="success" [disabled]="!updateEmailForm.valid">Update Email</ion-button>
+
     </form>
   </ion-content>
   
