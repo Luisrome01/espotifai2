@@ -1,3 +1,25 @@
+.header-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .header-title-wrapper {
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    flex: 1; /* Ocupa todo el espacio disponible */
+  }
+  
+  .title-text {
+    flex: 1; /* Hace que el texto "Perfil" ocupe el espacio restante */
+    text-align: center; /* Centra el texto horizontalmente */
+  }
+  
+  
+  
+
 .welcome-message {
     color: #3366ff; /* Color del texto */
     font-size: 18px; /* Tamaño de la fuente */

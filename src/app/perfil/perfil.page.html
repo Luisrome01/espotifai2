@@ -1,15 +1,22 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Perfil</ion-title>
+  <ion-toolbar color="white">
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['/tabs']">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="header-title">
+      <div class="header-title-wrapper">
+        <span class="title-text">Perfil</span>
+        <img src="assets/logo.png" alt="Logo" height="50px" class="logo-img">
+      </div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 
-
 <ion-content>
-
-
 
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content
@@ -21,20 +28,14 @@
     </ion-refresher-content>
   </ion-refresher>
 
-
-
-
-
-
-
   <div class="welcome-message">
     ¡Bienvenido, {{ userEmail }}!
   </div>
   <ion-button color="danger" (click)="logout()">Logout</ion-button>
-  <ion-button color="danger" (click)="goToTabs()">Go to Tab 1</ion-button>
+ 
   <ion-button color="primary" (click)="openUpdateEmailModal()">Update Email</ion-button>
-  <!-- Agrega esto en la ubicación deseada en tu archivo HTML -->
-<ion-button expand="block" (click)="openDeleteAccountModal()">Delete Account</ion-button>
+
+  <ion-button expand="block" (click)="openDeleteAccountModal()">Delete Account</ion-button>
 
 
 

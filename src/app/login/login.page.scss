@@ -1,21 +1,23 @@
+/* perfil.page.scss */
+
 .header-title {
-  --background: white; /* Color de fondo blanco para la barra de herramientas */
-}
+  --ion-color-base: var(--ion-color-primary); /* Cambia el color base según tu paleta de colores */
 
-.header-title-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Centrado horizontal */
-  width: 100%; /* Ocupa todo el ancho disponible */
-}
+  .header-title-wrapper {
+    display: flex;
+    align-items: center;
 
-.header-title-wrapper span {
-  flex: 1; /* Hace que el texto "espotifai" ocupe todo el espacio restante */
-  text-align: center; /* Centra el texto dentro de su espacio */
-}
+    img {
+      margin-left: 8px; /* Ajusta el margen izquierdo del logo según necesites */
+      height: 50px; /* Ajusta la altura del logo */
+    }
 
-.header-title-wrapper img {
-  margin-left: 10px; /* Espacio a la izquierda del logo para separarlo del texto */
+    span {
+      font-size: 24px; /* Tamaño de fuente del título */
+      font-weight: bold; /* Peso de la fuente del título */
+      margin-right: auto; /* Empuja el título hacia la izquierda */
+    }
+  }
 }
 
 .login-container {
