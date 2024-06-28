@@ -9,4 +9,13 @@ export class TabsPage {
 
   constructor() {}
 
+
+  onTabChange(event: any) {
+    const selectedTab = event.detail.tab;
+    if (selectedTab === 'tab4') {
+      
+    }
+  }
+
+
 }

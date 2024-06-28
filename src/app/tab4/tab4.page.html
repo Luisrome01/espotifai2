@@ -5,21 +5,22 @@
     <div class="playlist-list">
       <div class="playlist favorite">
         <div class="playlist-header">
-          <h2>Mis Me Gusta</h2>
+          <h2>Tus Me Gusta</h2>
           <ion-icon name="heart" class="heart-icon"></ion-icon>
         </div>
       </div>
+
       <div class="playlist" *ngFor="let playlist of playlists; let i = index">
         <div class="playlist-header">
           <ng-container *ngIf="!playlist.isEditing; else editingName">
-            <h2>{{ playlist.title }}</h2>
+            <h2>{{ playlist.name }}</h2>
             <div class="icon-container">
               <ion-icon name="create" class="edit-icon" (click)="editPlaylistTitle(i)"></ion-icon>
               <ion-icon name="close" class="delete-icon" (click)="showDeleteConfirmation(i)"></ion-icon>
             </div>
           </ng-container>
           <ng-template #editingName>
-            <input type="text" [(ngModel)]="playlist.title" (blur)="savePlaylistTitle(i)" (keyup.enter)="savePlaylistTitle(i)">
+            <input type="text" [(ngModel)]="playlist.name" (blur)="savePlaylistTitle(i)" (keyup.enter)="savePlaylistTitle(i)">
             <ion-icon name="checkmark" class="save-icon" style="color: #1DB954;" (click)="savePlaylistTitle(i)"></ion-icon>
           </ng-template>
         </div>
