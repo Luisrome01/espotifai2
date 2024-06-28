@@ -55,7 +55,7 @@ export class ModalEmailComponent implements OnInit {
 
       const requestBody = { newEmail };
 
-      this.http.put('http://192.168.1.115:5000/api/users/updateEmail', requestBody, { headers })
+      this.http.put('https://backend-spotify-c0gn.onrender.com/api/users/updateEmail', requestBody, { headers })
         .pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = 'Error desconocido al actualizar el email.';

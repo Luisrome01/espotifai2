@@ -51,7 +51,7 @@ export class RegisterPage {
         return;
       }
 
-      fetch('http://192.168.1.115:5000/api/auth/register', {
+      fetch('https://backend-spotify-c0gn.onrender.com/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

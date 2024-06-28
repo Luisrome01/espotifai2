@@ -59,7 +59,7 @@ export class ModalDeleteComponent {
       });
 
       // Realizar la solicitud DELETE al backend para eliminar el usuario
-      await this.http.delete('http://192.168.1.115:5000/api/users/deleteUser', { headers, body: { email } }).toPromise();
+      await this.http.delete('https://backend-spotify-c0gn.onrender.com/api/users/deleteUser', { headers, body: { email } }).toPromise();
 
       // Usuario eliminado exitosamente
       this.showSuccessAlert('User deleted successfully!');
