@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-
+import { Router } from '@angular/router'; 
 @Component({
   selector: 'app-tab4',
   templateUrl: 'tab4.page.html',
@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 export class Tab4Page {
   playlists: any[] = [];
 
-  constructor(private alertController: AlertController, private http: HttpClient) {}
+  constructor(private alertController: AlertController, private http: HttpClient, private router: Router) {}
 
   ionViewWillEnter() {
     this.loadPlaylists();
@@ -142,4 +142,9 @@ export class Tab4Page {
 
     return this.http.put(apiUrl, body, { headers });
   }
+
+  navigateToPlaylistDetail(playlistId: string) {
+    this.router.navigate(['/playlist-detail', playlistId]);
+  }
+
 }
