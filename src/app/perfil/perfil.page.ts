@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ModalEmailComponent } from './modalemail.component.';
 import { ModalDeleteComponent } from '../modaldelete/modaldelete.component';
+import { ModalupdatepasswordComponent } from '../modalupdatepassword/modalupdatepassword.component';
 
 @Component({
   selector: 'app-perfil',
@@ -78,6 +79,15 @@ export class PerfilPage implements OnInit {
       this.userEmail = updatedEmail; 
     }
   }
+  async openUpdatePasswordModal() {
+    const modal = await this.modalController.create({
+      component: ModalupdatepasswordComponent
+    });
+    return await modal.present();
+  } 
+
+  
+
 
   selectGender(gender: string) {
     this.selectedGender = gender;

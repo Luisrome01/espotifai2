@@ -11,6 +11,7 @@ export class LoginPage {
   loginForm: FormGroup;
   loginError: string = '';
   email: string = '';
+  password: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -41,9 +42,12 @@ export class LoginPage {
         if (data.token) {
           localStorage.setItem('authToken', data.token);
           localStorage.setItem('userEmail', email);
+          localStorage.setItem('password', password);
           console.log('Token guardado en localStorage:', localStorage.getItem('authToken'));
           console.log('Email guardado en localStorage:', localStorage.getItem('userEmail'));
+          console.log('password guardado en localStorage:', localStorage.getItem('password'));
           this.email = email;
+          this.password = password;
           this.router.navigateByUrl('/tabs', { replaceUrl: true });
         } else {
           this.loginError = 'Credenciales inválidas';

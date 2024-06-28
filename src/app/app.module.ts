@@ -11,10 +11,12 @@ import { AlbumArtistDetailModalComponent } from './album-artist-detail-modal/alb
 import { LoginPageModule } from './login/login.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModalDeleteModule } from './modaldelete/modaldelete.module';
+import { ModalupdatepasswordModule } from './modalupdatepassword/modalupdatepassword.module';
+ 
 /*import { AuthInterceptor } from './auth.interceptor.interceptor';*/
 @NgModule({
   declarations: [AppComponent, ModalComponent, AlbumArtistDetailModalComponent, ],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, HttpClientModule,],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, HttpClientModule, ModalupdatepasswordModule ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },/*{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor }, */],
   bootstrap: [AppComponent],
 })
