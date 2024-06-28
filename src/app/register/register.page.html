@@ -7,24 +7,22 @@
       </div>
     </ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> 
 
-
-  <ion-content class="ion-padding">
-    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-      <ion-refresher-content
-        pullingIcon="chevron-down-circle-outline"
-        pullingText="Pull to refresh"
-        refreshingSpinner="circles"
-        refreshingText="Refreshing..."
-      >
-      </ion-refresher-content>
-    </ion-refresher>
+<ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
 
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form">
     <p class="title">Register</p>
     <p class="message">Signup now and get full access to our app.</p>
-   
 
     <label>
       <input formControlName="email" class="input" type="email" placeholder="" required>
@@ -33,15 +31,17 @@
       <span>Email</span>
     </label>
 
-    <label>
-      <input formControlName="password" class="input" type="password" placeholder="" required>
+    <label class="password-label">
+      <input formControlName="password" class="input" [type]="passwordFieldType" placeholder="" required>
+      <ion-icon name="eye" (click)="togglePasswordVisibility('password')"></ion-icon>
       <span *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">Password is required</span>
       <span *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched">Password must be at least 6 characters</span>
       <span>Password</span>
     </label>
 
-    <label>
-      <input formControlName="confirmPassword" class="input" type="password" placeholder="" required>
+    <label class="password-label">
+      <input formControlName="confirmPassword" class="input" [type]="confirmPasswordFieldType" placeholder="" required>
+      <ion-icon name="eye" (click)="togglePasswordVisibility('confirmPassword')"></ion-icon>
       <span *ngIf="registerForm.get('confirmPassword')?.hasError('required') && registerForm.get('confirmPassword')?.touched">Confirm Password is required</span>
       <span *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched">Passwords do not match</span>
       <span>Confirm password</span>

@@ -39,8 +39,9 @@
 
       <div class="flex">
         <label>
-          <input class="input" type="password" placeholder="" required formControlName="password">
+          <input class="input" type="{{ showPassword ? 'text' : 'password' }}" placeholder="" required formControlName="password">
           <span>Password</span>
+          <ion-icon name="{{ showPassword ? 'eye-off-outline' : 'eye-outline' }}" class="password-toggle" (click)="togglePasswordVisibility()"></ion-icon>
         </label>
       </div>
 

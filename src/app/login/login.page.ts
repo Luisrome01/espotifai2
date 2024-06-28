@@ -12,6 +12,7 @@ export class LoginPage {
   loginError: string = '';
   email: string = '';
   password: string = '';
+  showPassword: boolean = false; // Variable para controlar la visibilidad de la contraseña
 
   constructor(
     private fb: FormBuilder,
@@ -23,12 +24,15 @@ export class LoginPage {
     });
   }
 
+  // Método para alternar la visibilidad de la contraseña
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  // Método para manejar el inicio de sesión
   onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-  
-      console.log('Email:', email);
-      console.log('Contraseña:', password);
   
       fetch('http://192.168.1.115:5000/api/auth/login', {
         method: 'POST',
@@ -43,9 +47,6 @@ export class LoginPage {
           localStorage.setItem('authToken', data.token);
           localStorage.setItem('userEmail', email);
           localStorage.setItem('password', password);
-          console.log('Token guardado en localStorage:', localStorage.getItem('authToken'));
-          console.log('Email guardado en localStorage:', localStorage.getItem('userEmail'));
-          console.log('password guardado en localStorage:', localStorage.getItem('password'));
           this.email = email;
           this.password = password;
           this.router.navigateByUrl('/tabs', { replaceUrl: true });
@@ -63,9 +64,6 @@ export class LoginPage {
       });
     }
   }
-  
-
-
 
   handleRefresh(event: CustomEvent) {
     setTimeout(() => {
