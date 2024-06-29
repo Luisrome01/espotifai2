@@ -10,7 +10,7 @@
         </div>
       </div>
 
-      <div class="playlist" *ngFor="let playlist of playlists; let i = index">
+      <div class="playlist" *ngFor="let playlist of playlists; let i = index" (click)="navigateToPlaylistDetail(playlist)">
         <div class="playlist-header">
           <ng-container *ngIf="!playlist.isEditing; else editingName">
             <h2>{{ playlist.name }}</h2>
@@ -23,7 +23,6 @@
             <input type="text" [(ngModel)]="playlist.name" (blur)="savePlaylistTitle(i)" (keyup.enter)="savePlaylistTitle(i)">
             <ion-icon name="checkmark" class="save-icon" style="color: #1DB954;" (click)="savePlaylistTitle(i)"></ion-icon>
           </ng-template>
-          <ion-button (click)="navigateToPlaylistDetail(playlist._id)" fill="clear">Ver Playlist</ion-button>
         </div>
       </div>
     </div>

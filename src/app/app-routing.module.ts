@@ -21,6 +21,11 @@ const routes: Routes = [
     
   },
   {
+    path: 'playlist-detail',
+    loadChildren: () => import('./tab4/playlist-detail.module').then(m => m.PlaylistDetailPageModule)
+  },
+
+  {
     path: 'perfil',
     loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
   }

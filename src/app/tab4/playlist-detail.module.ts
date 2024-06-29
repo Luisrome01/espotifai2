@@ -1,20 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
+import { RouterModule, Routes } from '@angular/router';
 import { PlaylistDetailPage } from './playlist-detail.page';
-import { Tab4PageRoutingModule } from './tab4-routing.module';
-import { Tab4Page } from './tab4.page';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: PlaylistDetailPage
+  }
+];
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    Tab4PageRoutingModule
+    RouterModule.forChild(routes)
   ],
-  declarations: [Tab4Page, PlaylistDetailPage ],
-  exports: [Tab4Page]
+  declarations: []
 })
-export class Tab4PageModule {}
+export class PlaylistDetailPageModule {}
