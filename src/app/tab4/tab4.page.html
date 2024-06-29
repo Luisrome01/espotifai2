@@ -15,13 +15,13 @@
           <ng-container *ngIf="!playlist.isEditing; else editingName">
             <h2>{{ playlist.name }}</h2>
             <div class="icon-container">
-              <ion-icon name="create" class="edit-icon" (click)="editPlaylistTitle(i)"></ion-icon>
-              <ion-icon name="close" class="delete-icon" (click)="showDeleteConfirmation(i)"></ion-icon>
+              <ion-icon name="create" class="edit-icon" (click)="editPlaylistTitle(i, $event)"></ion-icon>
+              <ion-icon name="close" class="delete-icon" (click)="showDeleteConfirmation(i, $event)"></ion-icon>
             </div>
           </ng-container>
           <ng-template #editingName>
-            <input type="text" [(ngModel)]="playlist.name" (blur)="savePlaylistTitle(i)" (keyup.enter)="savePlaylistTitle(i)">
-            <ion-icon name="checkmark" class="save-icon" style="color: #1DB954;" (click)="savePlaylistTitle(i)"></ion-icon>
+            <input type="text" [(ngModel)]="playlist.name" (blur)="savePlaylistTitle(i, $event)" (keyup.enter)="savePlaylistTitle(i, $event)" (click)="$event.stopPropagation()">
+            <ion-icon name="checkmark" class="save-icon" style="color: #1DB954;" (click)="savePlaylistTitle(i, $event)"></ion-icon>
           </ng-template>
         </div>
       </div>

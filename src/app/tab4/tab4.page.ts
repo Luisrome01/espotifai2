@@ -43,11 +43,12 @@ export class Tab4Page {
     );
   }
 
-  showDeleteConfirmation(index: number) {
+  showDeleteConfirmation(index: number, event: MouseEvent) {
+    event.stopPropagation();
     const playlistId = this.playlists[index]._id;
     const authToken = localStorage.getItem('authToken');
     const userId = authToken ? JSON.parse(atob(authToken.split('.')[1])).userId : null;
-
+  
     this.alertController.create({
       header: 'Eliminar playlist',
       message: '¿Estás seguro de que quieres eliminar esta playlist?',
@@ -91,12 +92,13 @@ export class Tab4Page {
       }
     );
   }
-
-  editPlaylistTitle(index: number) {
+  editPlaylistTitle(index: number, event: Event) {
+    event.stopPropagation();
     this.playlists[index].isEditing = true;
   }
-
-  savePlaylistTitle(index: number) {
+  
+  savePlaylistTitle(index: number, event: Event) {
+    event.stopPropagation();
     const playlist = this.playlists[index];
     this.updatePlaylist(playlist._id, playlist.name, playlist.songs).subscribe(
       response => {
