@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MusicPlayerService } from '../tab3/music-player.service'; // Importar el servicio compartido
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -11,8 +10,6 @@ import { AlertController } from '@ionic/angular';
 })
 export class PlaylistDetailPage implements OnInit {
   playlist: any = { name: '', songs: [] };
-
-  // Datos de autenticación de Spotify (reutilizando del Tab2)
   clientId = '07ef288afade491db9f20b58d12e6e25';
   clientSecret = '643e1e120e144d24b6a3644be1fa5dc0';
 
@@ -20,35 +17,25 @@ export class PlaylistDetailPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private musicPlayerService: MusicPlayerService,
     private alertController: AlertController
-  ) { }
+  ) {}
 
   ngOnInit() {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state) {
       this.playlist = navigation.extras.state['playlist'];
-      // Llamar método para cargar las canciones de la playlist
-      this.loadPlaylistSongs(this.playlist.id);
+      console.log('Playlist data:', this.playlist);
+      this.loadPlaylistSongs(this.playlist.songs);
     }
   }
 
-  loadPlaylistSongs(playlistId: string) {
+  loadPlaylistSongs(songIds: string[]) {
+    console.log('Song IDs:', songIds);
+
     this.getAccessToken().subscribe(
       (token: any) => {
         if (token.access_token) {
-          this.getPlaylistTracks(playlistId, token.access_token).subscribe(
-            (data: any) => {
-              this.playlist.songs = data.items.map((item: any) => ({
-                id: item.track.id,
-                name: item.track.name,
-                artists: item.track.artists.map((artist: any) => artist.name).join(', ')
-              }));
-            },
-            (error) => {
-              console.error('Error fetching playlist tracks', error);
-            }
-          );
+          this.loadSongsDetails(songIds, token.access_token);
         }
       },
       (error) => {
@@ -73,22 +60,41 @@ export class PlaylistDetailPage implements OnInit {
     return this.http.post(tokenUrl, body.toString(), httpOptions);
   }
 
-  getPlaylistTracks(playlistId: string, accessToken: string) {
-    const url = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+  loadSongsDetails(songIds: string[], accessToken: string) {
+    const url = `https://api.spotify.com/v1/tracks`;
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: `Bearer ${accessToken}`,
       }),
     };
-    return this.http.get(url, httpOptions);
-  }
 
+    songIds.forEach((songId) => {
+      if (songId) {
+        this.http.get<any>(`${url}/${songId}`, httpOptions).subscribe(
+          (song) => {
+            this.playlist.songs.push({
+              id: song.id,
+              name: song.name,
+              artists: song.artists.map((artist: any) => artist.name).join(', '),
+              album: song.album.name,
+              imageUrl: song.album.images[0]?.url,
+            });
+          },
+          (error) => {
+            console.error(`Error fetching details for song ID: ${songId}`, error);
+          }
+        );
+      } else {
+        console.error('Song ID is undefined');
+      }
+    });
+  }
 
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header,
       message,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
 
     await alert.present();
