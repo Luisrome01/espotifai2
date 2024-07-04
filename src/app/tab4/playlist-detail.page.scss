@@ -1,0 +1,55 @@
+.playlist-header {
+    background-color: #1DB954;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .playlist-header h1 {
+    margin: 0;
+  }
+  
+  ion-back-button {
+    --color: #1DB954; /* Cambia el color del botón de regreso */
+  }
+
+.song-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #000000; /* Color verde de Spotify */
+    border-radius: 8px;
+  }
+  
+  .song-thumbnail {
+    flex: 0 0 auto;
+    width: 120px; /* Tamaño más grande para la imagen */
+    height: 120px; /* Tamaño más grande para la imagen */
+    border-radius: 8px;
+    overflow: hidden; /* Oculta cualquier desbordamiento de la imagen */
+  }
+  
+  .song-thumbnail img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .song-details {
+    flex: 1;
+    margin-left: 10px;
+    color: white; /* Color de texto blanco para contrastar con el fondo verde */
+  }
+  
+  .song-details h2 {
+    font-size: 18px; /* Tamaño de fuente aumentado */
+    margin-bottom: 5px;
+    font-weight: bold; /* Texto en negrita para el título */
+  }
+  
+  .song-details p {
+    font-size: 16px; /* Tamaño de fuente aumentado */
+    margin: 0;
+  }
+  

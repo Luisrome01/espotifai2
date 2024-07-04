@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
+import { forkJoin, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs'; 
 
 @Component({
   selector: 'app-playlist-detail',
   templateUrl: './playlist-detail.page.html',
   styleUrls: ['./playlist-detail.page.scss'],
 })
-export class PlaylistDetailPage implements OnInit {
+export class PlaylistDetailPage implements OnInit, OnDestroy {
   playlist: any = { name: '', songs: [] };
   clientId = '07ef288afade491db9f20b58d12e6e25';
   clientSecret = '643e1e120e144d24b6a3644be1fa5dc0';
+  private accessTokenSubscription: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,6 +30,12 @@ export class PlaylistDetailPage implements OnInit {
       this.playlist = navigation.extras.state['playlist'];
       console.log('Playlist data:', this.playlist);
       this.loadPlaylistSongs(this.playlist.songs);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.accessTokenSubscription) {
+      this.accessTokenSubscription.unsubscribe();
     }
   }
 
@@ -44,7 +54,7 @@ export class PlaylistDetailPage implements OnInit {
     );
   }
 
-  getAccessToken() {
+  getAccessToken(): Observable<any> {
     const tokenUrl = 'https://accounts.spotify.com/api/token';
     const body = new URLSearchParams();
     body.set('grant_type', 'client_credentials');
@@ -68,26 +78,26 @@ export class PlaylistDetailPage implements OnInit {
       }),
     };
 
-    songIds.forEach((songId) => {
-      if (songId) {
-        this.http.get<any>(`${url}/${songId}`, httpOptions).subscribe(
-          (song) => {
-            this.playlist.songs.push({
-              id: song.id,
-              name: song.name,
-              artists: song.artists.map((artist: any) => artist.name).join(', '),
-              album: song.album.name,
-              imageUrl: song.album.images[0]?.url,
-            });
-          },
-          (error) => {
-            console.error(`Error fetching details for song ID: ${songId}`, error);
-          }
-        );
-      } else {
-        console.error('Song ID is undefined');
-      }
+    const requests = songIds.map(songId => {
+      return this.http.get<any>(`${url}/${songId}`, httpOptions).pipe(
+        map(song => ({
+          id: song.id,
+          name: song.name,
+          artists: song.artists.map((artist: any) => artist.name).join(', '),
+          album: song.album.name,
+          imageUrl: song.album.images[0]?.url,
+        }))
+      );
     });
+
+    forkJoin(requests).subscribe(
+      (songs) => {
+        this.playlist.songs = songs; // Replace the entire array with the fetched songs
+      },
+      (error) => {
+        console.error('Error fetching song details', error);
+      }
+    );
   }
 
   async presentAlert(header: string, message: string) {

@@ -3,22 +3,24 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/tab4"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ playlist?.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<div class="playlist-header">
+  <h1>{{ playlist?.name }}</h1>
+</div>
+
 <ion-content>
   <ion-list *ngIf="playlist && playlist.songs && playlist.songs.length > 0">
-    <ion-item *ngFor="let song of playlist.songs">
-      <ion-thumbnail slot="start">
+    <ion-item *ngFor="let song of playlist.songs" class="song-item">
+      <ion-thumbnail slot="start" class="song-thumbnail">
         <img *ngIf="song.imageUrl" [src]="song.imageUrl" alt="Song Thumbnail">
-        <img *ngIf="!song.imageUrl" src="/assets/img/placeholder-song.png" alt="Placeholder Thumbnail">
       </ion-thumbnail>
-      <ion-label>
+      <div class="song-details">
         <h2>{{ song.name }}</h2>
         <p>{{ song.artists }}</p>
         <p>Album: {{ song.album }}</p>
-      </ion-label>
+      </div>
     </ion-item>
   </ion-list>
   <ion-spinner *ngIf="!playlist || !playlist.songs || playlist.songs.length === 0"></ion-spinner>
