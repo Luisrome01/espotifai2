@@ -1,41 +1,64 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { SpotifyService } from '../Home/spotify.service'; // Asegúrate de importar tu servicio de Spotify aquí
+import { SpotifyService } from '../Home/spotify.service';
 
 @Component({
   selector: 'app-album-artist-detail-modal',
   templateUrl: './album-artist-detail-modal.component.html',
   styleUrls: ['./album-artist-detail-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlbumArtistDetailModalComponent implements OnInit {
   @Input() details: any = null;
   @Input() type: 'album' | 'artist' = 'album';
-  tracks: any[] = []; // Arreglo para almacenar las canciones del álbum
+  tracks: any[] = [];
+
+  colores = ['color-1', 'color-2', 'color-3', 'color-4', 'color-5'];
+  color: string | null = null;
+  previousColor: string = '';
 
   constructor(
     private modalController: ModalController,
-    private spotifyService: SpotifyService // Inyecta el servicio de Spotify
+    private spotifyService: SpotifyService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     if (this.type === 'album' && this.details) {
-      this.loadAlbumTracks(this.details.id); // Carga las canciones del álbum si es un detalle de álbum
+      this.loadAlbumTracks(this.details.id);
+      this.setRandomColor();
     }
   }
 
   dismiss() {
     this.modalController.dismiss();
   }
-
-  // Método para cargar las canciones de un álbum
   loadAlbumTracks(albumId: string) {
     this.spotifyService.getAlbumTracks(albumId).subscribe(
       (data) => {
-        this.tracks = data.items; // Asigna las canciones del álbum
+        this.tracks = data.items;
+        this.cdr.markForCheck();
       },
       (error) => {
         console.error('Error fetching album tracks:', error);
       }
     );
+  }
+  
+  setRandomColor() {
+    const randomIndex = this.getRandomIndex(this.colores);
+    this.color = this.colores[randomIndex];
+    this.previousColor = this.color; // Actualiza el color anterior
+    this.cdr.markForCheck();
+  }
+
+  getRandomIndex(arr: any[]): number {
+    let currentIndex: number;
+
+    do {
+      currentIndex = Math.floor(Math.random() * arr.length);
+    } while (this.previousColor === this.colores[currentIndex]);
+
+    return currentIndex;
   }
 }
