@@ -1,201 +1,81 @@
 .header-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .header-title-wrapper {
-    display: flex;
-    justify-content: center; /* Centra el contenido horizontalmente */
-    align-items: center; /* Centra el contenido verticalmente */
-    flex: 1; /* Ocupa todo el espacio disponible */
-  }
-  
-  .title-text {
-    flex: 1; /* Hace que el texto "Perfil" ocupe el espacio restante */
-    text-align: center; /* Centra el texto horizontalmente */
-  }
-  
-  
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
 
+.header-title-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
 
-  ion-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  
-  .welcome-message {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333333; /* Gris oscuro */
-    padding: 20px;
-    background-color: #FFFFFF; /* Blanco */
-    border-radius: 8px;
-    text-align: center;
-  }
-  
-  
-  ion-button {
-    margin: 10px 20px;
-  }
-  
-  
-  .custom-button {
-    width: calc(100% - 40px); /* To account for margins */
-    margin: 20px 20px;
-    --background: #1DB954; /* Spotify green color */
-    --background-activated: #1ED760; /* Slightly lighter green for active state */
-    --background-focused: #1DB954;
-    --background-hover: #1ED760;
-    --background-pressed: #1DB954;
-    --border-radius: 10px;
-    --color: white; /* Text color */
-    --box-shadow: none; /* Remove any shadow to avoid default blue shadow */
-  }
-  
-  
-  
-  .custom-button:hover {
-    --background: #1ED760; /* Hover state */
-  }
-  
-  .custom-button:active {
-    --background: #1DB954; /* Active state */
-  }
-  
+.title-text {
+  flex: 1;
+  text-align: center;
+}
 
+ion-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  height: 100%;
+}
 
-  .spacer {
-    flex-grow: 1;
-  }
-  
-  .logout-button {
-    // Aplica la forma ovalada
-    @extend .custom-button;
-  
-    // Centra el botón horizontalmente
-    margin: 90px;
-  
-    margin-top: 180px; 
-    max-width: 200px; 
-  
-    
-  }
-  
+.welcome-message {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333333;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  text-align: center;
+  margin: 20px;
+}
 
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra los botones horizontalmente */
+  margin-top: 20px; /* Espacio arriba de los botones */
+}
 
+.custom-button {
+  width: 100%; /* Ocupa todo el ancho disponible */
+  max-width: 300px; /* Máximo ancho para evitar que sean demasiado grandes */
+  margin: 10px; /* Espacio entre botones */
+  --background: #1db954; /* Color de fondo de Spotify */
+  --background-activated: #1ed760; /* Color de fondo activo */
+  --background-focused: #1db954; /* Color de fondo enfocado */
+  --background-hover: #1ed760; /* Color de fondo al pasar el mouse */
+  --background-pressed: #1db954; /* Color de fondo al presionar */
+  --border-radius: 20px; /* Borde redondeado */
+  --color: white; /* Color de texto */
+  --box-shadow: none; /* Sin sombra */
+}
 
+.custom-button:hover {
+  --background: #1ed760; /* Color de fondo al pasar el mouse */
+}
 
-  
+.custom-button:active {
+  --background: #1db954; /* Color de fondo al presionar */
+}
 
-
-.gender-selection {
-  margin: 50px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    overflow: hidden;
-    padding: 1.5rem;
-    border-radius: 0.375rem;
-    box-shadow: 0 0 0.375rem rgba(0, 0, 0, 0.31);
-  }
-  
-  .gender-selection .title {
-    text-align: center;
-    font-family: monospace;
-    font-size: 1rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: #4a4a4a;
-  }
-  
-  .gender-selection .options {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .gender-selection .option {
-    position: relative;
-    display: flex;
-    height: 50px;
-    width: 50px;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .gender-selection .radio {
-    position: absolute;
-    z-index: 10;
-    height: 100%;
-    width: 100%;
-    cursor: pointer;
-    opacity: 0;
-  }
-  
-  .gender-selection .background {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    border-radius: 50%;
-    padding: 1rem;
-    box-shadow: 0 0 0.375rem rgba(0, 0, 0, 0.31);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .gender-selection .radio:checked ~ .background {
-    transform: scale(1.1);
-    box-shadow: 0 0 0.125rem rgba(0, 0, 0, 0.31);
-  }
-  
-  .gender-selection .overlay {
-    position: absolute;
-    z-index: -10;
-    height: 100%;
-    width: 100%;
-    border-radius: 50%;
-    transition: transform 0.5s;
-  }
-  
-  .gender-selection .radio:checked ~ .overlay {
-    transform: scale(5);
-  }
-  
-  .gender-selection .icon {
-    position: absolute;
-  }
-  
-  .gender-selection #radio-male ~ .background {
-    background-color: #bfdbfe;
-  }
-  
-  .gender-selection #radio-male ~ .overlay {
-    background-color: #93c5fd;
-  }
-  
-  .gender-selection #radio-female ~ .background {
-    background-color: #fecdd3;
-  }
-  
-  .gender-selection #radio-female ~ .overlay {
-    background-color: #fda4af;
-  }
-  
-  .gender-selection #radio-non-binary ~ .background {
-    background-color: #e9d5ff;
-  }
-  
-  .gender-selection #radio-non-binary ~ .overlay {
-    background-color: #c4b5fd;
-  }
-  
-  .gender-selection #radio-none ~ .background {
-    background-color: #f5f5f5;
-  }
-  
-  .gender-selection #radio-none ~ .overlay {
-    background-color: #e5e5e5;
-  }
-  
+.logout-button {
+  width: 100%; /* Ocupa todo el ancho disponible */
+  max-width: 200px; /* Máximo ancho para el botón de logout */
+  margin: 10px; /* Espacio entre botones */
+  margin-top: 10px; /* Espacio arriba del botón de logout */
+  --background: #ff0000; /* Color rojo para logout */
+  --background-activated: #ff3333; /* Color de fondo activo */
+  --background-focused: #ff0000; /* Color de fondo enfocado */
+  --background-hover: #ff3333; /* Color de fondo al pasar el mouse */
+  --background-pressed: #ff0000; /* Color de fondo al presionar */
+  --border-radius: 20px; /* Borde redondeado */
+  --color: white; /* Color de texto */
+  --box-shadow: none; /* Sin sombra */
+}

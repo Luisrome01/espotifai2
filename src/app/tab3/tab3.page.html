@@ -6,11 +6,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="ion-padding">
+<ion-content scrollY="false" class="ion-padding">
   <ion-card *ngIf="selectedSong; else noSongSelected" class="song-card">
     <ion-card-header>
       <ion-card-subtitle>{{ selectedSong.artists[0].name }}</ion-card-subtitle>
       <ion-card-title>{{ selectedSong.name }}</ion-card-title>
+
     </ion-card-header>
 
     <ion-card-content class="song-details">
